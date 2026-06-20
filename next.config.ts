@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  outputFileTracingIncludes: {
+    "/**/*": ["./public/_mirror/**/*"],
+  },
 };
 
 export default nextConfig;
