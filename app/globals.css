@@ -1,0 +1,3278 @@
+@layer theme, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@source "../components";
+
+@font-face { font-family: "Inter"; src: url("/fonts/Inter-300.ttf") format("truetype"); font-style: normal; font-weight: 300; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("/fonts/Inter-400.ttf") format("truetype"); font-style: normal; font-weight: 400; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("/fonts/Inter-500.ttf") format("truetype"); font-style: normal; font-weight: 500; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("/fonts/Inter-600.ttf") format("truetype"); font-style: normal; font-weight: 600; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("/fonts/Inter-700.ttf") format("truetype"); font-style: normal; font-weight: 700; font-display: swap; }
+
+.native-page-styles,
+.native-page-shell {
+  display: contents;
+}
+
+.fido-cookie-settings {
+  appearance: none !important;
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  display: inline-block !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+
+.fido-privacy-page {
+  background: #fff;
+  padding: 150px 29px 110px;
+}
+
+.fido-privacy-inner {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  color: #262626;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.fido-privacy-kicker {
+  margin: 0 0 12px;
+  color: #9b5c31;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.fido-privacy-inner h1 {
+  margin: 0 0 38px;
+  color: #000;
+  font-size: clamp(40px, 6vw, 68px);
+  line-height: 1.08;
+}
+
+.fido-privacy-inner h2 {
+  margin: 48px 0 16px;
+  color: #000;
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.fido-privacy-inner h3 {
+  margin: 28px 0 8px;
+  color: #000;
+  font-size: 19px;
+  line-height: 1.3;
+}
+
+.fido-privacy-inner p,
+.fido-privacy-inner ul {
+  margin: 0 0 18px;
+}
+
+.fido-privacy-inner ul {
+  padding-left: 24px;
+  list-style: disc;
+}
+
+.fido-privacy-inner a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.fido-privacy-company {
+  margin-bottom: 34px;
+  border-left: 3px solid #e0945d;
+  background: #f6f6f6;
+  padding: 22px 24px;
+}
+
+@media (max-width: 767px) {
+  .fido-privacy-page {
+    padding: 120px 20px 70px;
+  }
+}
+
+/* Keep the original shared header stable even when Oxygen's runtime JS is absent. */
+.oxy-header-wrapper {
+  position: fixed !important;
+  inset: 0 0 auto !important;
+  width: 100% !important;
+  z-index: 999999 !important;
+  background: rgba(255, 255, 255, 0.985) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(140%) !important;
+  backdrop-filter: blur(14px) saturate(140%) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+}
+
+@media (max-width: 1119px) {
+  .oxy-header-wrapper {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+  }
+}
+
+.oxy-header-wrapper.oxy-sticky-header-active,
+.oxy-header-wrapper.oxy-sticky-header-fade-in,
+.oxy-header-wrapper .oxy-header-row,
+.oxy-header-wrapper .oxy-header-container {
+  background-color: transparent !important;
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+/* The fixed 94px header only needs a small content clearance on inner pages. */
+.native-page-shell:not(.home) > section:first-of-type > .ct-section-inner-wrap {
+  padding-top: 112px !important;
+}
+
+.oxy-repeater-pages-wrap {
+  margin-top: 12px !important;
+  padding-top: 0 !important;
+}
+
+.oxy-repeater-pages {
+  margin-top: 0 !important;
+}
+
+@media (min-width: 1120px) {
+  .native-page-shell #_dynamic_list-54-72,
+  .native-page-shell #_dynamic_list-64-62 {
+    display: grid !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    column-gap: 20px !important;
+    row-gap: 30px !important;
+    align-items: stretch !important;
+  }
+}
+
+/* Keep these final overrides after the legacy Oxygen contact rules. */
+body.oxygen-body .native-page-shell #section-2-50 > .ct-section-inner-wrap {
+  padding-bottom: 80px !important;
+}
+
+body.oxygen-body .native-page-shell #new_columns-4-50 {
+  gap: clamp(48px, 7vw, 96px) !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-7-50 {
+  padding: clamp(30px, 4vw, 50px) !important;
+  border: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+body.oxygen-body .native-page-shell #section-2-50 > .ct-section-inner-wrap {
+  gap: 0 !important;
+}
+
+body.oxygen-body .native-page-shell #widget-102-50 {
+  display: none !important;
+}
+
+body.oxygen-body .native-page-shell #headline-3-50 {
+  margin-bottom: 48px !important;
+}
+
+body.oxygen-body .native-page-shell #shortcode-111-50 {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.oxygen-body .native-page-shell .category-filter .btn-contact-main::before,
+body.oxygen-body .native-page-shell .category-filter .btn-contact-main::after {
+  content: none !important;
+  display: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Final visual states: keep these after all imported snapshot refinements. */
+body.oxygen-body .native-page-shell #div_block-7-50 {
+  background: #111 !important;
+  color: #fff !important;
+}
+
+body.oxygen-body .native-page-shell #headline-108-50,
+body.oxygen-body #wpforms-177 label,
+body.oxygen-body #wpforms-177 legend,
+body.oxygen-body #wpforms-177 .wpforms-field-label-inline,
+body.oxygen-body #wpforms-177 .wpforms-field-label-inline a {
+  color: #fff !important;
+}
+
+body.oxygen-body #wpforms-177 input[type="text"],
+body.oxygen-body #wpforms-177 input[type="email"],
+body.oxygen-body #wpforms-177 input[type="tel"],
+body.oxygen-body #wpforms-177 textarea {
+  border-bottom-color: rgba(255, 255, 255, 0.45) !important;
+  color: #fff !important;
+}
+
+body.oxygen-body #wpforms-177 input::placeholder,
+body.oxygen-body #wpforms-177 textarea::placeholder {
+  color: rgba(255, 255, 255, 0.58) !important;
+}
+
+body.oxygen-body #wpforms-submit-177 {
+  background: #fff !important;
+  color: #111 !important;
+}
+
+.fido-reviews-section {
+  position: relative !important;
+  isolation: isolate;
+  background: url("/wp-content/uploads/2025/06/fido-rekonstrukcia-chaty-02.webp") center 48% / cover no-repeat fixed !important;
+}
+
+.fido-reviews-section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.fido-reviews-section .fido-reviews-heading h2,
+.fido-reviews-section .fido-reviews-description {
+  color: #fff !important;
+}
+
+.fido-home-partners-header .fido-partners-title {
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 37.5px !important;
+}
+
+body.oxygen-body #div_block-65-27 {
+  width: 100% !important;
+  padding: 44px 38px !important;
+  background: #000 !important;
+}
+
+body.oxygen-body #text_block-69-27 {
+  width: auto !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+  font-size: 46px !important;
+}
+
+@media (max-width: 900px) {
+  .fido-reviews-section {
+    background-attachment: scroll !important;
+  }
+}
+
+@media (max-width: 620px) {
+  body.oxygen-body #div_block-65-27 {
+    padding: 34px 16px !important;
+  }
+
+  body.oxygen-body #text_block-69-27 {
+    white-space: nowrap !important;
+    font-size: 20px !important;
+  }
+}
+
+/* Project lightboxes always sit above the fixed site header. */
+body.oxygen-body .pswp,
+body.oxygen-body .pswp--open,
+body.oxygen-body .pswp__bg,
+body.oxygen-body .pswp__scroll-wrap {
+  z-index: 3000000 !important;
+}
+
+/* Contact form contrast and restored formal company details. */
+body.oxygen-body .native-page-shell #div_block-7-50 {
+  background: #111 !important;
+  color: #fff !important;
+}
+
+body.oxygen-body .native-page-shell #headline-108-50,
+body.oxygen-body #wpforms-177 label,
+body.oxygen-body #wpforms-177 legend,
+body.oxygen-body #wpforms-177 .wpforms-field-label-inline,
+body.oxygen-body #wpforms-177 .wpforms-field-label-inline a {
+  color: #fff !important;
+}
+
+body.oxygen-body #wpforms-177 input[type="text"],
+body.oxygen-body #wpforms-177 input[type="email"],
+body.oxygen-body #wpforms-177 input[type="tel"],
+body.oxygen-body #wpforms-177 textarea {
+  border-bottom-color: rgba(255, 255, 255, 0.45) !important;
+  color: #fff !important;
+}
+
+body.oxygen-body #wpforms-177 input::placeholder,
+body.oxygen-body #wpforms-177 textarea::placeholder {
+  color: rgba(255, 255, 255, 0.58) !important;
+}
+
+body.oxygen-body #wpforms-177 input:focus,
+body.oxygen-body #wpforms-177 textarea:focus {
+  border-bottom-color: #fff !important;
+}
+
+body.oxygen-body #wpforms-submit-177 {
+  background: #fff !important;
+  color: #111 !important;
+}
+
+body.oxygen-body .native-page-shell #section-54-50 {
+  border: 0 !important;
+  background: #f4f4f2 !important;
+}
+
+body.oxygen-body .native-page-shell #section-54-50 > .ct-section-inner-wrap {
+  padding-top: 70px !important;
+  padding-bottom: 70px !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-56-50 {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 28px !important;
+}
+
+body.oxygen-body .native-page-shell #section-54-50 .card-bits {
+  width: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Reviews use the Rekreačná chata project as a consistent photographic band. */
+.fido-reviews-section {
+  position: relative !important;
+  isolation: isolate;
+  background: url("/wp-content/uploads/2025/06/fido-rekonstrukcia-chaty-02.webp") center 48% / cover no-repeat fixed !important;
+}
+
+.fido-reviews-section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.fido-reviews-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.fido-reviews-section .fido-reviews-kicker {
+  color: #edaa78 !important;
+}
+
+.fido-reviews-section .fido-reviews-heading h2,
+.fido-reviews-section .fido-reviews-description {
+  color: #fff !important;
+}
+
+/* Flat interaction on all service recommendations and reference cards. */
+body.oxygen-body .native-page-shell #section-91-72 .card-sluzba-wrap,
+body.oxygen-body .native-page-shell #section-91-72 .card-sluzba-wrap:hover,
+body.oxygen-body .native-page-shell #section-91-72 .fido-clickable-card:hover,
+body.oxygen-body .native-page-shell .card-project,
+body.oxygen-body .native-page-shell .card-project:hover,
+body.oxygen-body .native-page-shell .card-project:focus-visible {
+  box-shadow: none !important;
+}
+
+/* Homepage partners match the O nás section exactly. */
+.fido-home-partners-header {
+  margin-bottom: 2rem !important;
+  text-align: left !important;
+}
+
+.fido-home-partners-header .fido-partners-title {
+  font-size: 1.875rem !important;
+  font-weight: 800 !important;
+  line-height: 1.25 !important;
+}
+
+/* Distinct black footer CTA band with a single-line desktop heading. */
+body.oxygen-body #div_block-65-27 {
+  position: relative !important;
+  width: 100% !important;
+  padding: 44px 38px !important;
+  background: #000 !important;
+}
+
+body.oxygen-body #text_block-69-27 {
+  width: auto !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+  font-size: clamp(28px, 3.4vw, 52px) !important;
+}
+
+@media (max-width: 900px) {
+  body.oxygen-body .native-page-shell #div_block-56-50 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .fido-reviews-section {
+    background-attachment: scroll !important;
+  }
+}
+
+@media (max-width: 620px) {
+  body.oxygen-body .native-page-shell #div_block-56-50 {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.oxygen-body #div_block-65-27 {
+    padding: 34px 20px !important;
+  }
+
+  body.oxygen-body #text_block-69-27 {
+    white-space: normal !important;
+    font-size: 28px !important;
+  }
+}
+
+/* Contact refinement: simple people-first details and a clean white form. */
+body.oxygen-body .native-page-shell #section-2-50 > .ct-section-inner-wrap {
+  padding-bottom: 80px !important;
+}
+
+body.oxygen-body .native-page-shell #headline-3-50 {
+  margin-bottom: 52px !important;
+}
+
+body.oxygen-body .native-page-shell #new_columns-4-50 {
+  gap: clamp(48px, 7vw, 96px) !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-5-50 {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  padding-top: 10px !important;
+}
+
+body.oxygen-body .native-page-shell #text_block-8-50 {
+  max-width: 540px !important;
+  margin: 0 0 34px !important;
+  color: #111 !important;
+  font-size: clamp(20px, 2vw, 27px) !important;
+  font-weight: 500 !important;
+  line-height: 1.45 !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-17-50,
+body.oxygen-body .native-page-shell #div_block-29-50 {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 24px 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+body.oxygen-body .native-page-shell #headline-10-50,
+body.oxygen-body .native-page-shell #headline-30-50 {
+  margin: 0 0 13px !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-5-50 .btn-contact-main {
+  min-height: 34px !important;
+  margin: 2px 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: rgba(0, 0, 0, 0.68) !important;
+  box-shadow: none !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-5-50 .btn-contact-main:hover {
+  color: #000 !important;
+  transform: none !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-7-50 {
+  padding: clamp(30px, 4vw, 50px) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+body.oxygen-body #wpforms-177 fieldset,
+body.oxygen-body #wpforms-177 .wpforms-field-layout-rows,
+body.oxygen-body #wpforms-177 .wpforms-layout-row,
+body.oxygen-body #wpforms-177 .wpforms-layout-column {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.oxygen-body #wpforms-177 .iti__country-container,
+body.oxygen-body #wpforms-177 .iti__selected-country,
+body.oxygen-body #wpforms-177 .iti__selected-country-primary,
+body.oxygen-body #wpforms-177 .iti__dropdown-content {
+  display: none !important;
+}
+
+body.oxygen-body #wpforms-177 input[type="tel"] {
+  padding-left: 0 !important;
+}
+
+body.oxygen-body #wpforms-177 input:focus,
+body.oxygen-body #wpforms-177 textarea:focus {
+  border-bottom-color: #111 !important;
+  outline: 0 !important;
+}
+
+/* Home headings and flat, image-led cards. */
+.fido-home-partners-block {
+  display: block !important;
+  width: 100% !important;
+}
+
+.fido-home-partners-header {
+  width: 100% !important;
+  margin-bottom: 18px !important;
+  text-align: center !important;
+}
+
+.fido-home-partners-header .fido-partners-title {
+  font-size: clamp(28px, 3.2vw, 44px) !important;
+}
+
+body.oxygen-body .native-page-shell.home #section-14-32 .card-sluzba-wrap,
+body.oxygen-body .native-page-shell.home #section-14-32 .card-sluzba-wrap:hover,
+body.oxygen-body .native-page-shell.home #section-14-32 .card-sluzba-wrap:focus-visible,
+body.oxygen-body .native-page-shell .card-project,
+body.oxygen-body .native-page-shell .card-project:hover,
+body.oxygen-body .native-page-shell .card-project:focus-visible {
+  box-shadow: none !important;
+}
+
+/* Project archive filters use compact buttons instead of divider lines. */
+body.oxygen-body .native-page-shell #section-58-62,
+body.oxygen-body .native-page-shell #section-58-62 > .ct-section-inner-wrap,
+body.oxygen-body .native-page-shell .category-filter {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+
+body.oxygen-body .native-page-shell .category-filter {
+  display: flex !important;
+  width: 100% !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin: 0 0 38px !important;
+  padding: 0 !important;
+}
+
+body.oxygen-body .native-page-shell .category-filter br {
+  display: none !important;
+}
+
+body.oxygen-body .native-page-shell .category-filter .btn-contact-main {
+  display: inline-flex !important;
+  width: auto !important;
+  min-height: 42px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 9px 17px !important;
+  border: 1px solid rgba(0, 0, 0, 0.18) !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+  color: #111 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+body.oxygen-body .native-page-shell .category-filter .btn-contact-main:hover {
+  border-color: #111 !important;
+  background: #f3f3f3 !important;
+  color: #111 !important;
+}
+
+body.oxygen-body .native-page-shell .category-filter .btn-contact-main.is-active {
+  border-color: #111 !important;
+  background: #111 !important;
+  color: #fff !important;
+}
+
+@media (max-width: 620px) {
+  body.oxygen-body .native-page-shell #headline-3-50 {
+    margin-bottom: 32px !important;
+  }
+
+  body.oxygen-body .native-page-shell .category-filter .btn-contact-main {
+    min-height: 38px !important;
+    padding: 8px 13px !important;
+    font-size: 13px !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1119px) {
+  .native-page-shell #_dynamic_list-54-72,
+  .native-page-shell #_dynamic_list-64-62 {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .native-page-shell #_dynamic_list-54-72,
+  .native-page-shell #_dynamic_list-64-62 {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 14px !important;
+  }
+}
+
+@media (max-width: 479px) {
+  .native-page-shell #_dynamic_list-54-72,
+  .native-page-shell #_dynamic_list-64-62 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
+
+/* Split inner-page heroes: copy on the left, media on the right. */
+@media (min-width: 1120px) {
+  .native-page-shell #section-5-72 > .ct-section-inner-wrap,
+  .native-page-shell #section-2-46 > .ct-section-inner-wrap,
+  .native-page-shell #section-5-71 > .ct-section-inner-wrap {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    grid-auto-flow: row !important;
+    column-gap: 48px !important;
+    align-items: start !important;
+    text-align: left !important;
+  }
+
+  .native-page-shell #section-5-72 #div_block-3-46,
+  .native-page-shell #section-5-72 #headline-8-72,
+  .native-page-shell #section-5-72 #div_block-9-72,
+  .native-page-shell #section-2-46 #div_block-3-46,
+  .native-page-shell #section-2-46 #headline-5-46,
+  .native-page-shell #section-2-46 #div_block-6-46,
+  .native-page-shell #section-5-71 #div_block-3-46,
+  .native-page-shell #section-5-71 #headline-8-71,
+  .native-page-shell #section-5-71 #text_block-10-71,
+  .native-page-shell #section-5-71 #link_button-12-71 {
+    grid-column: 1 !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+    align-items: flex-start !important;
+    justify-self: start !important;
+  }
+
+  .native-page-shell #section-5-72 #div_block-3-46,
+  .native-page-shell #section-2-46 #div_block-3-46,
+  .native-page-shell #section-5-71 #div_block-3-46 {
+    grid-row: 1 !important;
+  }
+
+  .native-page-shell #section-5-72 #headline-8-72,
+  .native-page-shell #section-2-46 #headline-5-46,
+  .native-page-shell #section-5-71 #headline-8-71 {
+    grid-row: 2 !important;
+  }
+
+  .native-page-shell #section-5-72 #div_block-9-72,
+  .native-page-shell #section-2-46 #div_block-6-46,
+  .native-page-shell #section-5-71 #text_block-10-71 {
+    grid-row: 3 !important;
+  }
+
+  .native-page-shell #section-5-71 #link_button-12-71 {
+    grid-row: 4 !important;
+  }
+
+  .native-page-shell #section-5-72 #image-12-72,
+  .native-page-shell #section-2-46 #image-13-46 {
+    grid-column: 2 !important;
+    grid-row: 1 / span 3 !important;
+    width: 100% !important;
+    height: 520px !important;
+    min-height: 520px !important;
+    object-fit: cover !important;
+    align-self: stretch !important;
+  }
+
+  .native-page-shell #section-5-72 #div_block-23-72 {
+    grid-column: 1 / -1 !important;
+    grid-row: 4 !important;
+    margin-top: 24px !important;
+  }
+
+  .native-page-shell #section-5-72 #code_block-213-72,
+  .native-page-shell #section-5-71 #code_block-172-71 {
+    display: none !important;
+  }
+
+  .native-page-shell #section-5-71 > .ct-section-inner-wrap::after {
+    content: "";
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    width: 100%;
+    min-height: 520px;
+    background: url("/wp-content/uploads/2025/06/fido-rekonstrukcia-chaty-02.webp") center / cover no-repeat;
+  }
+}
+
+/* Mega Menu Custom Styling */
+@media (min-width: 1120px) {
+  #menu-item-122,
+  #menu-item-116 {
+    position: static !important;
+  }
+  
+  #menu-item-122 .sub-menu,
+  #menu-item-116 .sub-menu {
+    position: absolute !important;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) translateY(0) !important;
+    width: 100vw !important;
+    background: #ffffff !important;
+    border-radius: 0 !important;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    padding: 32px max(2.5vw, calc((100vw - 1400px) / 2)) !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr 340px !important;
+    gap: 20px !important;
+    z-index: 999999 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Services Grid Flow */
+  .mega-service-box {
+    width: 100% !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  .mega-service-box a {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-radius: 12px !important;
+    padding: 18px 20px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.015) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    height: 100% !important;
+    box-sizing: border-box !important;
+    text-decoration: none !important;
+    justify-content: flex-start !important;
+  }
+
+  .mega-service-box a:hover {
+    background: #ffffff !important;
+    border-color: rgba(224, 148, 93, 0.4) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 24px rgba(224, 148, 93, 0.08) !important;
+  }
+
+  .mega-service-icon {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 8px !important;
+    background: rgba(224, 148, 93, 0.08) !important;
+    color: #e0945d !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .mega-service-box a:hover .mega-service-icon {
+    background: #e0945d !important;
+    color: #ffffff !important;
+  }
+
+  .mega-service-details {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    text-align: left !important;
+  }
+
+  .mega-service-title {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    color: #111111 !important;
+    transition: color 0.3s ease !important;
+    display: block !important;
+  }
+
+  .mega-service-box a:hover .mega-service-title {
+    color: #e0945d !important;
+  }
+
+  .mega-service-desc {
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    color: #666666 !important;
+    line-height: 1.45 !important;
+    display: block !important;
+  }
+
+  /* Featured Image Card on Right */
+  .mega-menu-featured {
+    grid-column: 4 !important;
+    grid-row: 1 / span 2 !important;
+    position: relative !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    height: 100% !important;
+    min-height: 180px !important;
+    display: block !important;
+  }
+
+  .mega-menu-featured a {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .mega-featured-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    background-image: url("/wp-content/uploads/2025/06/fido-rekonstrukcia-chaty-02.webp") !important;
+    background-size: cover !important;
+    background-position: center !important;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  /* Black gradient overlay over the image */
+  .mega-featured-bg::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0.4) 45%,
+      rgba(0, 0, 0, 0.85) 100%
+    ) !important;
+    z-index: 1 !important;
+  }
+
+  .mega-menu-featured a:hover .mega-featured-bg {
+    transform: scale(1.06) !important;
+  }
+
+  .mega-featured-content {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    z-index: 2 !important;
+  }
+
+  .mega-featured-kicker {
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.2px !important;
+    color: #e0945d !important;
+  }
+
+  .mega-featured-title {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    color: #ffffff !important;
+  }
+}
+
+@media (max-width: 1119px) {
+  .mega-menu-featured {
+    display: none !important;
+  }
+}
+
+/* Google Reviews Infinite Slider Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex !important;
+  animation: marquee 30s linear infinite !important;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused !important;
+}
+
+/* Google Reviews Font Family Overrides */
+.fido-reviews-section h2, 
+.fido-reviews-section h3, 
+.fido-reviews-section strong {
+  font-family: 'IBM Plex Sans', sans-serif !important;
+}
+
+.fido-reviews-section p, 
+.fido-reviews-section span, 
+.fido-reviews-section a {
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Partners Section Styling */
+.fido-partners-section {
+  padding-top: 4.5rem !important;
+  padding-bottom: 4.5rem !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.fido-partners-header {
+  margin-bottom: 2rem !important;
+}
+
+.fido-partners-kicker {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  color: #e0945d !important;
+  letter-spacing: 1.2px !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.fido-partners-title {
+  font-size: 1.875rem !important;
+  font-weight: 800 !important;
+  color: #000000 !important;
+  line-height: 1.25 !important;
+  font-family: 'IBM Plex Sans', sans-serif !important;
+}
+
+.fido-partners-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+@media (min-width: 640px) {
+  .fido-partners-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .fido-partners-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fido-partners-grid {
+    grid-template-columns: repeat(10, minmax(0, 1fr)) !important;
+  }
+}
+
+.bg-mist {
+  background-color: #f7f7f7 !important;
+}
+
+.fido-partners-grid a,
+.fido-partners-grid div.flex {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.fido-partners-grid a:hover {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Home Page Partner Logos Hover Effect */
+.fido-home-logo-link img {
+  opacity: 0.7;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.fido-home-logo-link:hover img {
+  opacity: 1 !important;
+}
+
+.fido-home-logo-link {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.fido-home-logo-link:hover {
+  transform: scale(1.08) translateY(-2px) !important;
+}
+
+.fido-home-partners-container {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+/* Page Load fadeInUp Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fido-page-transition-wrapper {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  width: 100% !important;
+}
+
+/* FIDO Ako Pracujeme (Postup) Section */
+.fido-postup-section {
+  background: #ffffff !important;
+  padding: 100px 24px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.fido-postup-header {
+  text-align: center !important;
+  margin-bottom: 60px !important;
+  width: 100% !important;
+}
+
+.fido-postup-kicker {
+  color: #9b5c31 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  display: block !important;
+  margin-bottom: 12px !important;
+}
+
+.fido-postup-title {
+  font-size: clamp(32px, 5vw, 48px) !important;
+  font-weight: 700 !important;
+  color: #000000 !important;
+  line-height: 1.2 !important;
+  margin-bottom: 20px !important;
+}
+
+.fido-postup-description {
+  font-size: 17px !important;
+  line-height: 1.7 !important;
+  color: rgba(0, 0, 0, 0.7) !important;
+  max-w: 750px !important;
+  margin: 0 auto !important;
+}
+
+.fido-postup-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 30px !important;
+  width: 100% !important;
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 1024px) {
+  .fido-postup-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 24px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .fido-postup-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+  .fido-postup-section {
+    padding: 60px 16px !important;
+  }
+}
+
+/* Card Styling */
+.fido-postup-card {
+  background: #fbfbfb !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+.fido-postup-card:hover {
+  transform: translateY(-8px) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05) !important;
+}
+
+.fido-postup-image-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  padding-bottom: 66.666% !important; /* 3:2 Aspect Ratio */
+  overflow: hidden !important;
+  background: #f3f3f3 !important;
+}
+
+.fido-postup-image {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.fido-postup-card:hover .fido-postup-image {
+  transform: scale(1.06) !important;
+}
+
+.fido-postup-number {
+  position: absolute !important;
+  top: 16px !important;
+  right: 20px !important;
+  font-size: 40px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  color: rgba(0, 0, 0, 0.06) !important;
+  transition: color 0.4s ease !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+}
+
+.fido-postup-card:hover .fido-postup-number {
+  color: rgba(155, 92, 49, 0.15) !important; /* Accent color on hover */
+}
+
+.fido-postup-content {
+  padding: 32px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-grow: 1 !important;
+  box-sizing: border-box !important;
+}
+
+.fido-postup-card-title {
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  color: #000000 !important;
+  margin-top: 0 !important;
+  margin-bottom: 12px !important;
+  line-height: 1.4 !important;
+}
+
+.fido-postup-card-desc {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  color: rgba(0, 0, 0, 0.65) !important;
+  margin: 0 !important;
+}
+
+/* Final shared typography layer. Oxygen's stock-content styles load after this file. */
+body.oxygen-body,
+body.oxygen-body input,
+body.oxygen-body textarea,
+body.oxygen-body select,
+body.oxygen-body button {
+  font-family: "Inter", Arial, sans-serif !important;
+}
+
+body.oxygen-body .native-page-shell p,
+body.oxygen-body .native-page-shell li,
+body.oxygen-body .native-page-shell .ct-text-block,
+body.oxygen-body .native-page-shell .oxy-stock-content-styles,
+body.oxygen-body .native-page-shell .oxy-stock-content-styles p,
+body.oxygen-body .native-page-shell .oxy-stock-content-styles li,
+body.oxygen-body .native-page-shell .blog-content,
+body.oxygen-body .native-page-shell .blog-content p,
+body.oxygen-body .native-page-shell .blog-content li,
+body.oxygen-body .native-page-shell .card-bits-text,
+body.oxygen-body .fido-partners-kicker,
+body.oxygen-body .fido-partners-title {
+  font-family: "Inter", Arial, sans-serif !important;
+}
+
+body.oxygen-body .native-page-shell .oxy-stock-content-styles li,
+body.oxygen-body .native-page-shell .blog-content li {
+  font-size: 17px !important;
+  line-height: 1.7 !important;
+}
+
+/* Keep the fixed header softly translucent without the initial transparent flash. */
+body.oxygen-body .oxy-header-wrapper {
+  background: rgba(255, 255, 255, 0.96) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(135%) !important;
+  backdrop-filter: blur(16px) saturate(135%) !important;
+}
+
+body.oxygen-body .oxy-header-wrapper a,
+body.oxygen-body .oxy-header-wrapper button,
+body.oxygen-body .oxy-header-wrapper .oxy-pro-menu-list > .menu-item > a,
+body.oxygen-body .oxy-header-wrapper .ct-link-button {
+  font-family: "Inter", Arial, sans-serif !important;
+}
+
+/* The generated Oxygen dropdowns are replaced by one stable photo mega menu. */
+@media (min-width: 1120px) {
+  body.oxygen-body .oxy-header-wrapper .sub-menu {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .fido-mega-trigger > a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+  }
+
+  .fido-mega-trigger > a::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  .fido-mega-trigger > a::before,
+  .fido-mega-trigger > a .oxy-pro-menu-dropdown-icon-click-area {
+    content: none !important;
+    display: none !important;
+  }
+
+  .fido-nav-caret {
+    display: inline-block !important;
+    width: 7px !important;
+    height: 7px !important;
+    flex: 0 0 7px !important;
+    margin: -4px 1px 0 5px !important;
+    border-right: 1.5px solid currentColor !important;
+    border-bottom: 1.5px solid currentColor !important;
+    transform: rotate(45deg) !important;
+    transition: transform 160ms ease !important;
+  }
+
+  .fido-mega-trigger:hover > a .fido-nav-caret,
+  .fido-mega-trigger:focus-within > a .fido-nav-caret {
+    margin-top: 3px !important;
+    transform: rotate(225deg) !important;
+  }
+}
+
+.fido-mega-menu {
+  position: fixed;
+  z-index: 999990;
+  top: 94px;
+  left: 0;
+  width: 100%;
+  padding: 22px 28px 28px;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 24px 42px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 160ms ease, transform 160ms ease, visibility 160ms ease;
+}
+
+.fido-mega-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.fido-mega-inner {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.8fr) minmax(620px, 2.8fr) minmax(220px, 0.85fr);
+  gap: 26px;
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.fido-mega-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px 10px 4px 0;
+}
+
+.fido-mega-intro p,
+.fido-reviews-kicker {
+  margin: 0 0 10px;
+  color: #9b5c31;
+  font: 700 12px/1.2 "Inter", sans-serif !important;
+  text-transform: uppercase;
+}
+
+.fido-mega-intro h2 {
+  margin: 0 0 13px;
+  color: #111;
+  font: 600 32px/1.08 "Inter", sans-serif !important;
+}
+
+.fido-mega-intro > span {
+  color: rgba(0, 0, 0, 0.62);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.fido-mega-intro > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: auto;
+  color: #111;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.fido-mega-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 158px;
+  align-content: start;
+  gap: 14px;
+}
+
+.fido-mega-tile {
+  position: relative;
+  display: block;
+  height: 158px;
+  min-height: 0;
+  overflow: hidden;
+  background: #dedede;
+  text-decoration: none;
+}
+
+.fido-mega-tile::after {
+  content: "";
+  position: absolute;
+  inset: 35% 0 0;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.76));
+}
+
+.fido-mega-tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  transition: transform 350ms ease;
+}
+
+.fido-mega-tile:hover img {
+  transform: scale(1.045);
+}
+
+.fido-mega-tile span {
+  position: absolute;
+  z-index: 1;
+  right: 14px;
+  bottom: 12px;
+  left: 14px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.fido-mega-cta {
+  display: flex;
+  height: 330px;
+  min-height: 330px;
+  flex-direction: column;
+  padding: 26px;
+  background: #b78958;
+  color: #fff;
+  text-decoration: none;
+}
+
+.fido-mega-cta strong {
+  max-width: 180px;
+  font-size: 25px;
+  line-height: 1.15;
+}
+
+.fido-mega-cta span {
+  margin-top: 30px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.fido-mega-cta b {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: auto;
+  font-size: 14px;
+}
+
+@media (max-width: 1119px) {
+  .fido-mega-menu,
+  .fido-card-cursor {
+    display: none !important;
+  }
+}
+
+/* Service cards are one large interactive target. */
+body.oxygen-body [data-id="link-68-72"],
+body.oxygen-body [data-id="link_text-68-72"],
+body.oxygen-body .card-sluzba-wrap .btn-link {
+  display: none !important;
+}
+
+.fido-clickable-card {
+  position: relative !important;
+  cursor: none !important;
+  outline: none;
+  transition: transform 220ms ease, box-shadow 220ms ease !important;
+}
+
+.fido-clickable-card:hover,
+.fido-clickable-card:focus-visible {
+  transform: translateY(-5px) !important;
+  box-shadow: none !important;
+}
+
+.fido-clickable-card * {
+  cursor: none !important;
+}
+
+.fido-card-cursor {
+  position: fixed;
+  z-index: 1000001;
+  top: 0;
+  left: 0;
+  padding: 8px 12px;
+  background: #111;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.fido-card-cursor.is-visible {
+  opacity: 1;
+}
+
+/* Main service and about heroes keep a clear vertical reading order. */
+body.oxygen-body .native-page-shell #div_block-9-72,
+body.oxygen-body .native-page-shell #div_block-6-46 {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  gap: 14px !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-9-72 > *,
+body.oxygen-body .native-page-shell #div_block-6-46 > * {
+  width: 100% !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* Google review slider */
+.fido-reviews-section {
+  overflow: hidden;
+  padding: 100px 29px;
+  background: #f4f4f2;
+}
+
+.fido-reviews-inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.fido-reviews-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 48px;
+  margin-bottom: 42px;
+}
+
+.fido-reviews-heading h2 {
+  margin: 0;
+  color: #111;
+  font: 600 clamp(38px, 4vw, 58px)/1.06 "Inter", sans-serif !important;
+}
+
+.fido-reviews-description {
+  max-width: 700px;
+  margin: 16px 0 0;
+  color: rgba(0, 0, 0, 0.62);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.fido-reviews-summary,
+.fido-rating-box,
+.fido-rating-box > span,
+.fido-review-stars,
+.fido-review-controls {
+  display: flex;
+  align-items: center;
+}
+
+.fido-reviews-summary {
+  gap: 12px;
+}
+
+.fido-rating-box {
+  gap: 14px;
+  min-height: 58px;
+  padding: 10px 16px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.fido-rating-box > strong {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.fido-rating-box > span {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.fido-rating-box small,
+.fido-review-author small {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 12px;
+}
+
+.fido-review-stars {
+  gap: 2px;
+  color: rgba(0, 0, 0, 0.15);
+}
+
+.fido-review-stars .is-filled {
+  fill: #d98548;
+  color: #d98548;
+}
+
+.fido-google-link {
+  display: inline-flex;
+  min-height: 58px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.fido-review-slider-shell {
+  position: relative;
+}
+
+.fido-review-track {
+  display: grid;
+  grid-auto-columns: calc((100% - 40px) / 3);
+  grid-auto-flow: column;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+.fido-review-track::-webkit-scrollbar {
+  display: none;
+}
+
+.fido-review-link,
+.fido-review-card {
+  display: block;
+  height: 100%;
+  scroll-snap-align: start;
+  text-decoration: none;
+}
+
+.fido-review-card {
+  min-height: 286px;
+  padding: 27px;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  background: #fff;
+  color: #111;
+}
+
+.fido-review-author-row,
+.fido-review-author {
+  display: flex;
+  align-items: center;
+}
+
+.fido-review-author-row {
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.fido-review-author {
+  min-width: 0;
+  gap: 12px;
+}
+
+.fido-review-author img,
+.fido-review-avatar {
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.fido-review-avatar {
+  display: grid;
+  place-items: center;
+  background: #111;
+  color: #fff;
+  font-weight: 700;
+}
+
+.fido-review-author > span:last-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.fido-review-author strong {
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fido-review-card > p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.68);
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+}
+
+.fido-review-controls {
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.fido-review-controls button {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  background: transparent;
+  color: #111;
+  cursor: pointer;
+}
+
+.fido-review-controls button:hover {
+  background: #111;
+  color: #fff;
+}
+
+/* Contact page: details left, restrained form right, map at the supplied location. */
+body.oxygen-body .native-page-shell #section-2-50 > .ct-section-inner-wrap {
+  padding-bottom: 90px !important;
+}
+
+body.oxygen-body .native-page-shell #new_columns-4-50 {
+  display: grid !important;
+  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr) !important;
+  gap: clamp(44px, 7vw, 100px) !important;
+  align-items: start !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-5-50,
+body.oxygen-body .native-page-shell #div_block-7-50 {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.fido-contact-information {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  width: 100%;
+  margin: 36px 0 42px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.fido-contact-info-block {
+  padding: 22px 22px 22px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.fido-contact-info-block:nth-child(odd) {
+  padding-right: 28px;
+}
+
+.fido-contact-info-block h2 {
+  margin: 0 0 9px;
+  font: 700 13px/1.3 "Inter", sans-serif !important;
+  text-transform: uppercase;
+}
+
+.fido-contact-info-block p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.64);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+body.oxygen-body .native-page-shell #div_block-7-50 {
+  padding: 38px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  background: #f5f5f3 !important;
+}
+
+body.oxygen-body .native-page-shell #headline-108-50 {
+  margin-bottom: 28px !important;
+  font-size: 28px !important;
+}
+
+body.oxygen-body #wpforms-177 .wpforms-field {
+  padding: 0 0 18px !important;
+}
+
+body.oxygen-body #wpforms-177 label,
+body.oxygen-body #wpforms-177 legend {
+  margin-bottom: 8px !important;
+  color: #111 !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+body.oxygen-body #wpforms-177 input[type="text"],
+body.oxygen-body #wpforms-177 input[type="email"],
+body.oxygen-body #wpforms-177 input[type="tel"],
+body.oxygen-body #wpforms-177 textarea {
+  width: 100% !important;
+  min-height: 52px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.24) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 10px 0 !important;
+  color: #111 !important;
+  box-shadow: none !important;
+}
+
+body.oxygen-body #wpforms-177 textarea {
+  min-height: 120px !important;
+  resize: vertical !important;
+}
+
+body.oxygen-body #wpforms-submit-177 {
+  min-height: 54px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #111 !important;
+  padding: 0 24px !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+.fido-contact-map > .ct-section-inner-wrap {
+  max-width: none !important;
+  padding: 0 !important;
+}
+
+.fido-contact-map iframe {
+  display: block;
+  width: 100%;
+  height: min(520px, 56vw);
+  min-height: 380px;
+  border: 0;
+}
+
+@media (max-width: 900px) {
+  .fido-reviews-heading,
+  body.oxygen-body .native-page-shell #new_columns-4-50 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .fido-review-track {
+    grid-auto-columns: min(82vw, 430px);
+  }
+
+  .fido-reviews-summary {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 620px) {
+  .fido-reviews-section {
+    padding: 70px 20px;
+  }
+
+  .fido-contact-information {
+    grid-template-columns: 1fr;
+  }
+
+  body.oxygen-body .native-page-shell #div_block-7-50 {
+    padding: 25px !important;
+  }
+}
+
+/* Header Dropdown Carets */
+@media (min-width: 1120px) {
+  .menu-item-has-children > a {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .menu-item-has-children > a::after {
+    content: "" !important;
+    display: inline-block !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-right: 1.5px solid currentColor !important;
+    border-bottom: 1.5px solid currentColor !important;
+    transform: translateY(-2px) rotate(45deg) !important;
+    transition: transform 0.2s ease, opacity 0.2s ease !important;
+    opacity: 0.5 !important;
+    margin-left: 2px !important;
+  }
+
+  .menu-item-has-children:hover > a::after {
+    transform: translateY(1px) rotate(225deg) !important;
+    opacity: 0.9 !important;
+  }
+}
+
+/* FIDO Custom Furniture Hero Slider */
+.fido-hero-slider {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 520px !important;
+  min-height: 520px !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  background: #f0f0f0 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+@media (max-width: 1119px) {
+  .fido-hero-slider {
+    height: 400px !important;
+    min-height: 400px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .fido-hero-slider {
+    height: 280px !important;
+    min-height: 280px !important;
+  }
+}
+
+.fido-hero-slide {
+  position: absolute !important;
+  inset: 0 !important;
+  background-size: cover !important;
+  background-position: center !important;
+  opacity: 0 !important;
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important;
+  z-index: 1 !important;
+}
+
+.fido-hero-slide.active {
+  opacity: 1 !important;
+  z-index: 2 !important;
+}
+
+/* Slider Controls */
+.fido-slider-arrow {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  transition: all 0.3s ease !important;
+  padding: 0 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+.fido-slider-arrow:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-50%) scale(1.05) !important;
+  color: #ffffff !important;
+}
+
+.fido-slider-prev {
+  left: 20px !important;
+}
+
+.fido-slider-next {
+  right: 20px !important;
+}
+
+.fido-slider-arrow svg {
+  display: block !important;
+}
+
+.fido-slider-dots {
+  position: absolute !important;
+  bottom: 24px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  display: flex !important;
+  gap: 8px !important;
+  z-index: 10 !important;
+  background: rgba(0, 0, 0, 0.2) !important;
+  padding: 8px 14px !important;
+  border-radius: 20px !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.fido-slider-dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.4) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+.fido-slider-dot.active {
+  background: #ffffff !important;
+  transform: scale(1.2) !important;
+}
+
+/* Mobile Accordion Styling for Megamenu */
+@media (max-width: 1119px) {
+  .mega-service-box a {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 10px 12px !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  .mega-service-icon {
+    width: 32px !important;
+    height: 32px !important;
+    background: rgba(224, 148, 93, 0.08) !important;
+    color: #e0945d !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 6px !important;
+    flex-shrink: 0 !important;
+  }
+  .mega-service-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .mega-service-desc {
+    display: none !important;
+  }
+  .mega-service-title {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+  }
+  .mega-menu-featured {
+    display: none !important;
+  }
+}
+
+/* Footer full-width background and gap restoration */
+#section-63-27,
+#section-63-27 > .ct-section-inner-wrap {
+  background-color: #262626 !important;
+}
+
+/* Footer bottom copyright and links styling */
+#text_block-139-27,
+#text_block-139-27 span {
+  color: #9e9e9e !important;
+  font-weight: 400 !important;
+}
+
+#link_text-144-27,
+#link_text-148-27,
+#link_text-149-27,
+#text_block-153-27 {
+  color: #9e9e9e !important;
+  font-weight: 400 !important;
+  transition: color 0.25s ease !important;
+}
+
+#link_text-144-27:hover,
+#link_text-148-27:hover,
+#link_text-149-27:hover,
+#div_block-152-27:hover #text_block-153-27 {
+  color: #ffffff !important;
+}
+
+/* Footer non-heading text coloring */
+#text_block-81-27 {
+  color: #9e9e9e !important;
+}
+
+#section-63-27 .footer-link,
+#section-63-27 .footer-link-text,
+#section-63-27 .footer-link-text .oxel_icon_button_text,
+#section-63-27 .footer-link-text svg {
+  color: #9e9e9e !important;
+  transition: color 0.2s ease, opacity 0.2s ease !important;
+}
+
+#section-63-27 .footer-link:hover,
+#section-63-27 .footer-link-text:hover,
+#section-63-27 .footer-link-text:hover .oxel_icon_button_text,
+#section-63-27 .footer-link-text:hover svg {
+  color: #ffffff !important;
+}
+
+@media (min-width: 1120px) {
+  body.oxygen-body .oxy-header-wrapper #menu-item-881 .sub-menu,
+  body.oxygen-body .oxy-header-wrapper #menu-item-116 .sub-menu,
+  body.oxygen-body .oxy-header-wrapper #menu-item-122 .sub-menu {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  body:has(#menu-item-881:hover) .fido-menu-realestate,
+  body:has(#menu-item-881:focus-within) .fido-menu-realestate,
+  body:has(#menu-item-116:hover) .fido-menu-furniture,
+  body:has(#menu-item-116:focus-within) .fido-menu-furniture,
+  body:has(#menu-item-143:hover) .fido-menu-windows,
+  body:has(#menu-item-143:focus-within) .fido-menu-windows,
+  body:has(#menu-item-122:hover) .fido-menu-services,
+  body:has(#menu-item-122:focus-within) .fido-menu-services,
+  .fido-menu-realestate:hover,
+  .fido-menu-furniture:hover,
+  .fido-menu-windows:hover,
+  .fido-menu-services:hover {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  body.oxygen-body .oxy-header-wrapper #menu-item-881.fido-mega-trigger > a::after,
+  body.oxygen-body .oxy-header-wrapper #menu-item-116.fido-mega-trigger > a::after,
+  body.oxygen-body .oxy-header-wrapper #menu-item-143.fido-mega-trigger > a::after,
+  body.oxygen-body .oxy-header-wrapper #menu-item-122.fido-mega-trigger > a::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    border: 0 !important;
+    transform: none !important;
+  }
+}
+
+/* Final contact cascade overrides. */
+body.oxygen-body .native-page-shell #section-2-50 > .ct-section-inner-wrap {
+  padding-bottom: 80px !important;
+  gap: 0 !important;
+}
+
+body.oxygen-body .native-page-shell #new_columns-4-50 {
+  gap: clamp(48px, 7vw, 96px) !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-7-50 {
+  padding: clamp(30px, 4vw, 50px) !important;
+  border: 0 !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+body.oxygen-body .native-page-shell #widget-102-50 {
+  display: none !important;
+}
+
+body.oxygen-body .native-page-shell #headline-3-50 {
+  margin-bottom: 48px !important;
+}
+
+body.oxygen-body .native-page-shell #shortcode-111-50 {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.oxygen-body .native-page-shell .category-filter .btn-contact-main::before,
+body.oxygen-body .native-page-shell .category-filter .btn-contact-main::after {
+  content: none !important;
+  display: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Definitive visual states after the complete mirrored stylesheet cascade. */
+body.oxygen-body .native-page-shell #div_block-7-50 {
+  background: #111 !important;
+  color: #fff !important;
+}
+
+body.oxygen-body .native-page-shell #headline-108-50,
+body.oxygen-body #wpforms-177 label,
+body.oxygen-body #wpforms-177 legend,
+body.oxygen-body #wpforms-177 .wpforms-field-label-inline,
+body.oxygen-body #wpforms-177 .wpforms-field-label-inline a {
+  color: #fff !important;
+}
+
+body.oxygen-body #wpforms-177 input[type="text"],
+body.oxygen-body #wpforms-177 input[type="email"],
+body.oxygen-body #wpforms-177 input[type="tel"],
+body.oxygen-body #wpforms-177 textarea {
+  border-bottom-color: rgba(255, 255, 255, 0.45) !important;
+  color: #fff !important;
+}
+
+body.oxygen-body #wpforms-177 input::placeholder,
+body.oxygen-body #wpforms-177 textarea::placeholder {
+  color: rgba(255, 255, 255, 0.58) !important;
+}
+
+body.oxygen-body #wpforms-submit-177 {
+  background: #fff !important;
+  color: #111 !important;
+}
+
+.fido-reviews-section {
+  position: relative !important;
+  isolation: isolate;
+  background: url("/wp-content/uploads/2025/06/fido-rekonstrukcia-chaty-02.webp") center 48% / cover no-repeat fixed !important;
+}
+
+.fido-reviews-section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68);
+}
+
+.fido-reviews-section .fido-reviews-heading h2,
+.fido-reviews-section .fido-reviews-description {
+  color: #fff !important;
+}
+
+.fido-home-partners-header .fido-partners-title {
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 37.5px !important;
+}
+
+body.oxygen-body #div_block-65-27 {
+  width: 100% !important;
+  padding: 44px 38px !important;
+  background: #000 !important;
+}
+
+body.oxygen-body #text_block-69-27 {
+  width: auto !important;
+  max-width: none !important;
+  white-space: nowrap !important;
+  font-size: 46px !important;
+}
+
+@media (max-width: 900px) {
+  .fido-reviews-section {
+    background-attachment: scroll !important;
+  }
+}
+
+@media (max-width: 620px) {
+  body.oxygen-body #div_block-65-27 {
+    padding: 34px 16px !important;
+  }
+
+  body.oxygen-body #text_block-69-27 {
+    white-space: nowrap !important;
+    font-size: 20px !important;
+  }
+}
+
+/* Modernized Contact Page Styles */
+.fido-contact-people-row {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 32px !important;
+  width: 100% !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.13) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13) !important;
+  padding: 8px 0 !important;
+}
+
+@media (max-width: 767px) {
+  .fido-contact-people-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px !important;
+    border-bottom: 0 !important;
+  }
+}
+
+.fido-contact-person-card {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 20px !important;
+  padding: 24px 0 !important;
+}
+
+.fido-contact-person-img {
+  width: 90px !important;
+  height: 90px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: 3px solid rgba(224, 148, 93, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  flex-shrink: 0 !important;
+}
+
+.fido-contact-person-info {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.fido-contact-person-role {
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  font-weight: 700 !important;
+  color: #e0945d !important; /* Orange accent */
+}
+
+.fido-contact-person-links {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+/* Sidebar Contact Info Details Cards Grid */
+body.oxygen-body .native-page-shell #div_block-5-50 #div_block-56-50 {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+  margin-top: 24px !important;
+  width: 100% !important;
+}
+
+@media (max-width: 767px) {
+  body.oxygen-body .native-page-shell #div_block-5-50 #div_block-56-50 {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px !important;
+  }
+  
+  .fido-contact-person-card {
+    gap: 16px !important;
+  }
+}
+
+body.oxygen-body .native-page-shell #div_block-5-50 .card-bits {
+  background: #fdfdfd !important;
+  border: 1px solid rgba(0, 0, 0, 0.07) !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01) !important;
+  transition: all 0.25s ease-in-out !important;
+  text-align: left !important;
+  min-height: 0 !important;
+  width: 100% !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-5-50 .card-bits:hover {
+  border-color: rgba(224, 148, 93, 0.4) !important;
+  box-shadow: 0 8px 18px rgba(224, 148, 93, 0.06) !important;
+  transform: translateY(-2px) !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-5-50 .card-bits-subtitle {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #111 !important;
+  margin: 0 0 6px 0 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+body.oxygen-body .native-page-shell #div_block-5-50 .card-bits-text {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Modern Compact Contact Form */
+body.oxygen-body .native-page-shell #div_block-7-50 {
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 32px !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+@media (max-width: 620px) {
+  body.oxygen-body .native-page-shell #div_block-7-50 {
+    padding: 24px 20px !important;
+  }
+}
+
+body.oxygen-body #wpforms-177 .wpforms-field {
+  padding: 0 0 14px !important;
+}
+
+body.oxygen-body #wpforms-177 label,
+body.oxygen-body #wpforms-177 legend {
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+  display: block !important;
+}
+
+body.oxygen-body #wpforms-177 input[type="text"],
+body.oxygen-body #wpforms-177 input[type="email"],
+body.oxygen-body #wpforms-177 input[type="tel"],
+body.oxygen-body #wpforms-177 select,
+body.oxygen-body #wpforms-177 textarea {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  padding: 11px 14px !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  width: 100% !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+body.oxygen-body #wpforms-177 input[type="text"],
+body.oxygen-body #wpforms-177 input[type="email"],
+body.oxygen-body #wpforms-177 input[type="tel"] {
+  height: 46px !important;
+  padding: 11px 14px !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+}
+
+body.oxygen-body #wpforms-177 select {
+  height: 46px !important;
+  padding: 11px 40px 11px 14px !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  background-size: 16px !important;
+}
+
+body.oxygen-body #wpforms-177 select option {
+  background-color: #111 !important;
+  color: #fff !important;
+}
+
+body.oxygen-body #wpforms-177 input:focus,
+body.oxygen-body #wpforms-177 select:focus,
+body.oxygen-body #wpforms-177 textarea:focus {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: #ffffff !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15) !important;
+}
+
+body.oxygen-body #wpforms-177 .wpforms-field-medium,
+body.oxygen-body #wpforms-177 .wpforms-field-large,
+body.oxygen-body #wpforms-177 select.wpforms-field-medium {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+body.oxygen-body #wpforms-177 .wpforms-layout-row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 16px !important;
+  margin-bottom: 0 !important;
+  width: 100% !important;
+}
+
+body.oxygen-body #wpforms-177 .wpforms-layout-column {
+  flex: 1 1 200px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+}
+
+body.oxygen-body #wpforms-177-field_7-container legend {
+  display: none !important;
+}
+
+body.oxygen-body #wpforms-177-field_7-container ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+body.oxygen-body #wpforms-177-field_7-container li {
+  position: relative !important;
+  display: block !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body.oxygen-body #wpforms-177-field_7-container label {
+  position: relative !important;
+  display: inline-block !important;
+  padding-left: 56px !important;
+  cursor: pointer !important;
+  min-height: 24px !important;
+  line-height: 24px !important;
+  margin: 0 !important;
+}
+
+body.oxygen-body #wpforms-177-field_7-container input[type="radio"] {
+  opacity: 0 !important;
+  position: absolute !important;
+  z-index: -1 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+body.oxygen-body #wpforms-177-field_7-container label::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 44px !important;
+  height: 24px !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  transition: all 0.25s ease !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  cursor: pointer !important;
+}
+
+body.oxygen-body #wpforms-177-field_7-container label::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 3px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 18px !important;
+  height: 18px !important;
+  background: #ffffff !important;
+  border-radius: 50% !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  cursor: pointer !important;
+}
+
+body.oxygen-body #wpforms-177-field_7-container input[type="radio"]:checked + label::before {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+body.oxygen-body #wpforms-177-field_7-container input[type="radio"]:checked + label::after {
+  left: 23px !important;
+  background: #000000 !important;
+}
+
+/* Contact Form Subtitle */
+.fido-contact-form-subtitle {
+  display: block !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  margin-top: 8px !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  line-height: 1.5 !important;
+}
+
+body.oxygen-body #wpforms-submit-177 {
+  background: #ffffff !important;
+  color: #111111 !important;
+  font-weight: 700 !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  border: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+  font-size: 15px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.12) !important;
+}
+
+body.oxygen-body #wpforms-submit-177:hover {
+  background: #f0f0f0 !important;
+  color: #111111 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Align layout columns with other form fields */
+body.oxygen-body #wpforms-177 .wpforms-field-layout,
+body.oxygen-body #wpforms-177 .wpforms-field-layout-rows,
+body.oxygen-body #wpforms-177 .wpforms-layout-row {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Style the GDPR inline label to match normal text */
+body.oxygen-body #wpforms-177 .wpforms-field-label-inline,
+body.oxygen-body #wpforms-177 .wpforms-field-label-inline a {
+  font-size: 13px !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  display: inline !important;
+  margin: 0 !important;
+}
+
+body.oxygen-body #wpforms-177 .wpforms-field-label-inline a {
+  text-decoration: underline !important;
+}
+
+/* Edge-to-Edge Footer CTA stretch styling */
+body.oxygen-body #section-63-27 > .ct-section-inner-wrap {
+  padding: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  background-color: #262626 !important;
+}
+
+body.oxygen-body #div_block-64-27 {
+  padding: 0 !important;
+  gap: 0 !important;
+  background: transparent !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+body.oxygen-body #div_block-65-27 {
+  width: 100% !important;
+  background: #000 !important;
+  padding: 44px max(24px, calc((100vw - 1440px) / 2)) !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 30px !important;
+}
+
+body.oxygen-body #new_columns-71-27 {
+  padding: 60px max(24px, calc((100vw - 1440px) / 2)) !important;
+  background: #262626 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+body.oxygen-body #div_block-138-27 {
+  padding: 30px max(24px, calc((100vw - 1440px) / 2)) !important;
+  background: #262626 !important;
+  width: 100% !important;
+  margin: 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 1119px) {
+  body.oxygen-body #div_block-65-27 {
+    flex-wrap: wrap !important;
+    padding: 38px max(24px, calc((100vw - 1440px) / 2)) !important;
+  }
+  
+  body.oxygen-body #new_columns-71-27 {
+    padding: 40px max(24px, calc((100vw - 1440px) / 2)) !important;
+  }
+}
+
+@media (max-width: 620px) {
+  body.oxygen-body #div_block-65-27 {
+    padding: 34px max(16px, calc((100vw - 1440px) / 2)) !important;
+  }
+  
+  body.oxygen-body #new_columns-71-27 {
+    padding: 40px max(16px, calc((100vw - 1440px) / 2)) !important;
+  }
+  
+  body.oxygen-body #div_block-138-27 {
+    padding: 24px max(16px, calc((100vw - 1440px) / 2)) !important;
+  }
+}
+
+/* Disable card hover shadow effects globally */
+.fido-clickable-card:hover,
+.card-sluzba-wrap:hover,
+.card-project:hover,
+.fido-postup-card:hover,
+body.oxygen-body .native-page-shell #div_block-5-50 .card-bits:hover {
+  box-shadow: none !important;
+}
+
+/* Hide date of adding and category on project/referencie cards */
+body.oxygen-body .card-project-meta-wrap {
+  display: none !important;
+}
+
+/* Hide "Viac o projekte" button on project/referencie cards */
+body.oxygen-body .card-project .btn-alt {
+  display: none !important;
+}
+
+/* Rezidencia Lubovec Page Contact Form (wpforms-713) Modernization */
+body.oxygen-body #wpforms-713 {
+  background: #111111 !important;
+  color: #ffffff !important;
+  padding: 40px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15) !important;
+  max-width: 680px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+body.oxygen-body #wpforms-713 .wpforms-field {
+  padding: 0 0 14px !important;
+}
+
+body.oxygen-body #wpforms-713 label,
+body.oxygen-body #wpforms-713 legend {
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.8px !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  font-weight: 600 !important;
+  margin-bottom: 6px !important;
+  display: block !important;
+}
+
+body.oxygen-body #wpforms-713 .wpforms-required-label {
+  color: #ff4d4d !important;
+  margin-left: 2px !important;
+}
+
+body.oxygen-body #wpforms-713 input[type="text"],
+body.oxygen-body #wpforms-713 input[type="email"],
+body.oxygen-body #wpforms-713 textarea {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  padding: 11px 14px !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  width: 100% !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+body.oxygen-body #wpforms-713 input[type="text"],
+body.oxygen-body #wpforms-713 input[type="email"] {
+  height: 46px !important;
+  padding: 11px 14px !important;
+  line-height: normal !important;
+  box-sizing: border-box !important;
+}
+
+body.oxygen-body #wpforms-713 textarea {
+  min-height: 120px !important;
+  resize: vertical !important;
+  line-height: 1.5 !important;
+}
+
+body.oxygen-body #wpforms-713 input::placeholder,
+body.oxygen-body #wpforms-713 textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+body.oxygen-body #wpforms-713 input:focus,
+body.oxygen-body #wpforms-713 textarea:focus {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-color: #ffffff !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15) !important;
+}
+
+body.oxygen-body #wpforms-713 .wpforms-field-medium,
+body.oxygen-body #wpforms-713 .wpforms-field-large {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Layout system for fields (E-mail and Telefón row) */
+body.oxygen-body #wpforms-713 .wpforms-field-layout,
+body.oxygen-body #wpforms-713 .wpforms-field-layout-rows,
+body.oxygen-body #wpforms-713 .wpforms-layout-row {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+body.oxygen-body #wpforms-713 .wpforms-layout-row {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 16px !important;
+  margin-bottom: 0 !important;
+  width: 100% !important;
+}
+
+body.oxygen-body #wpforms-713 .wpforms-layout-column {
+  flex: 1 1 200px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+}
+
+/* Spam verification field hiding */
+body.oxygen-body #wpforms-713-field_2-container {
+  position: absolute !important;
+  overflow: hidden !important;
+  display: inline !important;
+  height: 1px !important;
+  width: 1px !important;
+  z-index: -1000 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+}
+
+/* GDPR Checkbox/Toggle styling */
+body.oxygen-body #wpforms-713-field_9-container legend {
+  display: none !important;
+}
+
+body.oxygen-body #wpforms-713-field_9-container ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+body.oxygen-body #wpforms-713-field_9-container li {
+  position: relative !important;
+  display: block !important;
+  cursor: pointer !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body.oxygen-body #wpforms-713-field_9-container .wpforms-field-label-inline {
+  position: relative !important;
+  display: inline-block !important;
+  padding-left: 56px !important;
+  cursor: pointer !important;
+  min-height: 24px !important;
+  line-height: 24px !important;
+  margin: 0 !important;
+  font-size: 13px !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.oxygen-body #wpforms-713-field_9-container .wpforms-field-label-inline a {
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-decoration: underline !important;
+  display: inline !important;
+  font-weight: 400 !important;
+}
+
+body.oxygen-body #wpforms-713-field_9-container input[type="checkbox"] {
+  opacity: 0 !important;
+  position: absolute !important;
+  z-index: -1 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+body.oxygen-body #wpforms-713-field_9-container .wpforms-field-label-inline::before {
+  content: "" !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 44px !important;
+  height: 24px !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  transition: all 0.25s ease !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  cursor: pointer !important;
+}
+
+body.oxygen-body #wpforms-713-field_9-container .wpforms-field-label-inline::after {
+  content: "" !important;
+  position: absolute !important;
+  left: 3px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 18px !important;
+  height: 18px !important;
+  background: #ffffff !important;
+  border-radius: 50% !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  cursor: pointer !important;
+}
+
+body.oxygen-body #wpforms-713-field_9-container input[type="checkbox"]:checked + .wpforms-field-label-inline::before {
+  background: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+body.oxygen-body #wpforms-713-field_9-container input[type="checkbox"]:checked + .wpforms-field-label-inline::after {
+  left: 23px !important;
+  background: #000000 !important;
+}
+
+/* Submit Button */
+body.oxygen-body #wpforms-submit-713 {
+  background: #ffffff !important;
+  color: #111111 !important;
+  font-weight: 700 !important;
+  padding: 12px 24px !important;
+  border-radius: 8px !important;
+  border: 0 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  width: 100% !important;
+  font-size: 15px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.12) !important;
+  height: 48px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+body.oxygen-body #wpforms-submit-713:hover {
+  background: #f0f0f0 !important;
+  color: #111111 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25) !important;
+}
+
+body.oxygen-body #wpforms-713 .wpforms-submit-spinner {
+  margin: 10px auto 0 !important;
+  display: block !important;
+}
+
+/* Error validation styling */
+body.oxygen-body #wpforms-713 label.wpforms-error,
+body.oxygen-body #wpforms-713 em.wpforms-error {
+  color: #ff4d4d !important;
+  font-size: 12px !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  font-weight: 500 !important;
+  margin-top: 4px !important;
+  display: block !important;
+}
+
+@media (max-width: 620px) {
+  body.oxygen-body #wpforms-713 {
+    padding: 24px 20px !important;
+  }
+}
+
+/* Rezidencia Lubovec Page - Side-by-side Contact Section & Transparent Background */
+body.oxygen-body .fido-lubovec-contact-section,
+body.oxygen-body #kontakt.fido-lubovec-contact-section {
+  background-color: transparent !important;
+  background-image: none !important;
+  background: transparent !important;
+}
+
+@media (min-width: 992px) {
+  body.oxygen-body .fido-lubovec-contact-section {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 60px !important;
+    padding: 80px 0 !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+  }
+  
+  body.oxygen-body .fido-lubovec-contact-left {
+    flex: 1 1 45% !important;
+    text-align: left !important;
+    max-width: 500px !important;
+  }
+  
+  body.oxygen-body .fido-lubovec-contact-right {
+    flex: 1 1 50% !important;
+    max-width: 550px !important;
+  }
+
+  body.oxygen-body .fido-lubovec-contact-left h2,
+  body.oxygen-body .fido-lubovec-contact-left .ct-headline {
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  body.oxygen-body .fido-lubovec-contact-left div,
+  body.oxygen-body .fido-lubovec-contact-left .ct-text-block {
+    text-align: left !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 991px) {
+  body.oxygen-body .fido-lubovec-contact-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 40px !important;
+    padding: 60px 20px !important;
+  }
+  
+  body.oxygen-body .fido-lubovec-contact-left {
+    width: 100% !important;
+    text-align: center !important;
+  }
+  
+  body.oxygen-body .fido-lubovec-contact-right {
+    width: 100% !important;
+  }
+
+  body.oxygen-body .fido-lubovec-contact-left h2,
+  body.oxygen-body .fido-lubovec-contact-left .ct-headline {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  body.oxygen-body .fido-lubovec-contact-left div,
+  body.oxygen-body .fido-lubovec-contact-left .ct-text-block {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* Homepage 3x3 Service Card Grid & Premium Layout */
+body.oxygen-body .native-page-shell.home #div_block-23-32 {
+  grid-template-columns: repeat(3, minmax(250px, 1fr)) !important;
+  grid-column-gap: 30px !important;
+  grid-row-gap: 30px !important;
+  display: grid !important;
+  width: 100% !important;
+  align-items: stretch !important;
+}
+
+@media (max-width: 1024px) {
+  body.oxygen-body .native-page-shell.home #div_block-23-32 {
+    grid-template-columns: repeat(2, minmax(200px, 1fr)) !important;
+    grid-column-gap: 24px !important;
+    grid-row-gap: 24px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  body.oxygen-body .native-page-shell.home #div_block-23-32 {
+    grid-template-columns: 1fr !important;
+    grid-column-gap: 0 !important;
+    grid-row-gap: 30px !important;
+  }
+}
+
+.fido-custom-service-card {
+  display: flex !important;
+  flex-direction: column !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.fido-custom-service-card:hover {
+  transform: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.fido-custom-service-card .img-link-wraper-primary {
+  display: block !important;
+  width: 100% !important;
+  height: 200px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.fido-custom-service-card .img-primary {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.fido-custom-service-card:hover .img-primary {
+  transform: scale(1.05) !important;
+}
+
+.fido-custom-service-card-body {
+  padding: 12px 0 0 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex-grow: 1 !important;
+  background: transparent !important;
+  text-align: left !important;
+}
+
+.fido-custom-service-card-body h3 {
+  margin: 0 0 10px 0 !important;
+  line-height: 1.35 !important;
+  transition: color 0.2s ease !important;
+}
+
+.fido-custom-service-card:hover .fido-custom-service-card-body h3 {
+  color: #e0945d !important;
+}
+
+.fido-custom-service-card-text {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #555555 !important;
+  margin: 0 !important;
+  flex-grow: 1 !important;
+}
+
+/* Homepage Realizacie 4 columns next to each other on desktop */
+@media (min-width: 1024px) {
+  body.oxygen-body #_dynamic_list-481-32 {
+    grid-template-columns: repeat(4, minmax(180px, 1fr)) !important;
+    grid-column-gap: 30px !important;
+    grid-row-gap: 20px !important;
+    display: grid !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  body.oxygen-body #_dynamic_list-481-32 {
+    grid-template-columns: repeat(2, minmax(200px, 1fr)) !important;
+    grid-column-gap: 24px !important;
+    grid-row-gap: 24px !important;
+    display: grid !important;
+  }
+}
+
+@media (max-width: 767px) {
+  body.oxygen-body #_dynamic_list-481-32 {
+    grid-template-columns: 1fr !important;
+    grid-row-gap: 30px !important;
+    display: grid !important;
+  }
+}
+
+/* Hero section CTA button custom white styling */
+body.oxygen-body #section-2-32 #link_button-8-32.ct-link-button {
+  background-color: #ffffff !important;
+  color: #111111 !important;
+  border: 1px solid #ffffff !important;
+  font-weight: 600 !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+body.oxygen-body #section-2-32 #link_button-8-32.ct-link-button:hover {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+
+/* Blog Card Excerpt - CSS line clamp */
+.fido-blog-card-excerpt-container {
+  margin-top: 12px !important;
+}
+
+.fido-blog-card-excerpt {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: #555555 !important;
+  margin: 0 !important;
+}
+
+/* Homepage Hero Video Background and Dimming */
+body.oxygen-body #section-2-32.oxy-video-background {
+  position: relative !important;
+  overflow: hidden !important;
+  background-color: #000000 !important;
+}
+
+body.oxygen-body #section-2-32 .oxy-video-container {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  z-index: 1 !important;
+}
+
+body.oxygen-body #section-2-32 .oxy-video-container video {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  transform: translate(-50%, -50%) !important;
+  object-fit: cover !important;
+  z-index: 1 !important;
+}
+
+body.oxygen-body #section-2-32 .oxy-video-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: rgba(0, 0, 0, 0.55) !important; /* Dim overlay */
+  z-index: 2 !important;
+}
+
+body.oxygen-body #section-2-32 > .ct-section-inner-wrap {
+  position: relative !important;
+  z-index: 3 !important; /* Above video and overlay */
+}
+
+/* White text overrides for Hero section on dimmed background */
+body.oxygen-body #section-2-32 #headline-6-32.ct-headline,
+body.oxygen-body #section-2-32 .ct-headline.h1 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+body.oxygen-body #section-2-32 #text_block-7-32.ct-text-block,
+body.oxygen-body #section-2-32 .ct-text-block.text-l {
+  color: rgba(255, 255, 255, 0.9) !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+
+
+
+

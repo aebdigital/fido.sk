@@ -1,0 +1,133 @@
+{
+  "mirroredAt": "2026-06-20T09:24:17.631Z",
+  "routes": [
+    "/ako-vytvorit-utulnu-spalnu-s-minimalistickym-dizajnom/",
+    "/preco-je-vymena-okien-investiciou-do-buducnosti/",
+    "/ako-si-vybrat-spravneho-dodavatela-pre-nabytok/",
+    "/",
+    "/o-nas/",
+    "/kontakt/",
+    "/blog/",
+    "/na-stiahnutie/",
+    "/zasady-cookie/",
+    "/ochrana-osobnych-udajov/",
+    "/obchodne-podmienky/",
+    "/fido-building-calcul/",
+    "/nehnutelnosti/",
+    "/rezidencia-lubovec/",
+    "/nehnutelnost/byt-a/",
+    "/nehnutelnost/byt-1-b/",
+    "/nehnutelnost/byt-1-c/",
+    "/nehnutelnost/byt-2-a/",
+    "/nehnutelnost/byt-2-b/",
+    "/nehnutelnost/byt-2-c/",
+    "/realizacie/shake-theory/",
+    "/realizacie/rekreacna-chata/",
+    "/realizacie/autopo/",
+    "/realizacie/rekonstrukcia-priestorov/",
+    "/realizacie/rekonstrukcia-socialnych-zariadeni/",
+    "/sluzby/nabytok-na-mieru/",
+    "/sluzby/nabytok-na-mieru/vstavane-skrine/",
+    "/sluzby/nabytok-na-mieru/kuchynske-linky/",
+    "/sluzby/rekonstrukcie-domov-a-bytov/",
+    "/sluzby/nehnutelnosti/",
+    "/sluzby/okna-brany-a-dvere/",
+    "/sluzby/zamocnictvo/",
+    "/sluzby/strojarstvo/",
+    "/sluzby/hodinovy-manzel/",
+    "/sluzby/pozicovna-naradia/",
+    "/sluzby/doprava/",
+    "/sluzby/nabytok-na-mieru/postele/",
+    "/sluzby/nabytok-na-mieru/obyvacie-steny/",
+    "/sluzby/nabytok-na-mieru/komody/",
+    "/sluzby/nabytok-na-mieru/satniky/",
+    "/sluzby/nabytok-na-mieru/stoly/",
+    "/sluzby/nabytok-na-mieru/dekoracne-panely/",
+    "/sluzby/okna-brany-a-dvere/plastove-okna/",
+    "/sluzby/okna-brany-a-dvere/hlinikove-okna/",
+    "/sluzby/okna-brany-a-dvere/ocelove-okna/",
+    "/sluzby/okna-brany-a-dvere/drevene-okna/",
+    "/sluzby/okna-brany-a-dvere/posuvne-dvere-plastove/",
+    "/sluzby/okna-brany-a-dvere/posuvne-dvere-hlinikove/",
+    "/sluzby/okna-brany-a-dvere/vchodove-dvere-plastove/",
+    "/sluzby/okna-brany-a-dvere/vchodove-dvere-hlinikove/",
+    "/sluzby/nehnutelnosti/vystavba-na-kluc/",
+    "/kategoria/dizajn/",
+    "/kategoria/stavebne-poradenstvo/",
+    "/kategoria/tipy-pre-domacnost/",
+    "/znacka/dizajn-tipy/",
+    "/znacka/interierove-riesenia/",
+    "/znacka/byvanie-a-energeticka-efektivita/",
+    "/kategorie_realizacie/sukromne-projekty/",
+    "/kategorie_realizacie/komercne-projekty/",
+    "/kategorie_realizacie/priemyselne-projekty/",
+    "/author/andrea/",
+    "/author/devbigway-sk/",
+    "/author/marco/",
+    "/sluzby/",
+    "/realizacie/"
+  ],
+  "pageFailures": [],
+  "assetFailures": [
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Regular.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Regular.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Regular-Italic.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Regular-Italic.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Bold.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Bold.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Bold-Italic.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/dm-sans/DMSans-Bold-Italic.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Light.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Light.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Regular.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Italic.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Italic.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Bold.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/ibm-plex-mono/IBMPlexMono-Bold.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/inter/Inter-VariableFont_slnt,wght.ttf",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/inter/Inter-VariableFont_slnt,wght.ttf"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/source-serif-pro/SourceSerif4Variable-Roman.ttf.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/source-serif-pro/SourceSerif4Variable-Roman.ttf.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/source-serif-pro/SourceSerif4Variable-Italic.ttf.woff2",
+      "item": "https://www.fido.sk/wp-content/themes/oxygen-is-not-a-theme/assets/fonts/source-serif-pro/SourceSerif4Variable-Italic.ttf.woff2"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/plugins/wpforms/assets/pro/css/fields/img/flags.png?1",
+      "item": "https://www.fido.sk/wp-content/plugins/wpforms/assets/pro/css/fields/img/flags.png?1"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/plugins/wpforms/assets/pro/css/fields/img/flags@2x.png?1",
+      "item": "https://www.fido.sk/wp-content/plugins/wpforms/assets/pro/css/fields/img/flags@2x.png?1"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/plugins/wpforms/assets/pro/css/fields/img/globe.png",
+      "item": "https://www.fido.sk/wp-content/plugins/wpforms/assets/pro/css/fields/img/globe.png"
+    },
+    {
+      "error": "404 https://www.fido.sk/wp-content/plugins/wpforms/assets/pro/css/fields/img/globe@2x.png",
+      "item": "https://www.fido.sk/wp-content/plugins/wpforms/assets/pro/css/fields/img/globe@2x.png"
+    }
+  ]
+}
