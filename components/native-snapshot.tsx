@@ -1,9 +1,34 @@
 import type { NativePage } from "@/lib/native-page";
 import { GoogleReviews } from "@/components/google-reviews";
+import { ProjectDetail } from "@/components/project-detail";
 import { getGoogleReviews } from "@/lib/google-reviews";
+import { extractProjectPage } from "@/lib/project-detail";
 import { posts, featuredImage, plainText } from "@/lib/site-data";
+import { megaMenus } from "@/config/site";
 
 const reviewsSectionPattern = /<section id="section-399-32"[\s\S]*?<\/section>/i;
+const calculSectionPattern = /<section id="section-436-32"[\s\S]*?<\/section>/gi;
+
+function generateFidoCalculBannerHtml() {
+  return `
+    <section class="ct-section section-width fido-calcul-banner-section">
+      <div class="ct-section-inner-wrap">
+        <div class="fido-calcul-banner">
+          <div class="fido-calcul-banner-copy">
+            <img class="fido-calcul-banner-logo" src="/fidocalcul-logo.png" alt="FIDO Calcul" loading="lazy" />
+            <p class="fido-calcul-banner-kicker">Stavebný softvér pre váš tím</p>
+            <h2>Stavby, cenníky a fakturácia v jednej appke</h2>
+            <p class="fido-calcul-banner-description">FIDO Calcul drží projekty, klientov a dokumenty v jednom systéme, aby ste nemuseli prepínať medzi viacerými nástrojmi.</p>
+          </div>
+          <a class="fido-calcul-banner-button" href="https://fidocalcul.sk/" target="_blank" rel="noopener noreferrer">
+            Pozrieť FIDO Calcul
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  `;
+}
 
 const partnerLogos = [
   { name: "Eko-Okna", image: "/partners/eko-okna.svg", url: "https://ekookna-slovensko.sk/" },
@@ -110,7 +135,7 @@ function generateHomePartnersHtml() {
     <div id="div_block-627-32" class="ct-div-block fido-home-partners-block">
       <div class="fido-partners-header fido-home-partners-header">
         <p class="fido-partners-kicker">Partneri</p>
-        <h2 class="fido-partners-title">Spolupracujeme s renomovanými partnermi</h2>
+        <h2 class="ct-headline h2 fido-partners-title">Spolupracujeme s renomovanými partnermi</h2>
       </div>
       <div class="fido-home-partners-container" style="display: flex !important; flex-direction: row !important; flex-wrap: wrap !important; align-items: center !important; justify-content: center !important; padding: 20px 0 !important; width: 100% !important;">
         ${logosHtml}
@@ -185,6 +210,10 @@ function enhanceContactHtml(bodyHtml: string) {
 
   return bodyHtml
     .replace(/<div id="div_block-6-50"[\s\S]*?<\/div>/i, "")
+    .replace(
+      /<div id="text_block-8-50" class="ct-text-block" >Potrebujete pomoc\? Náš tím pre úspech klientov a poradcovia sú tu, aby odpovedali na všetky vaše otázky\.<\/div>/i,
+      `<p id="text_block-8-50" class="ct-text-block fido-contact-intro">Potrebujete pomoc? Náš tím pre úspech klientov a poradcovia sú tu, aby odpovedali na všetky vaše otázky.</p>`
+    )
     .replace(/\s+wpforms-smart-phone-field/g, "")
     .replace(/\s+data-rule-smart-phone-field="true"/g, "")
     .replace(
@@ -217,188 +246,37 @@ function enhanceContactHtml(bodyHtml: string) {
     );
 }
 
-const serviceBoxesHtml = `
-<li id="menu-item-119" class="mega-service-box">
-  <a href="/sluzby/rekonstrukcie-domov-a-bytov/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Rekonštrukcie domov a bytov</span>
-      <span class="mega-service-desc">Stavebné úpravy, prerábky a realizácie na kľúč</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-142" class="mega-service-box">
-  <a href="/sluzby/zamocnictvo/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Zámočníctvo</span>
-      <span class="mega-service-desc">Brány, ploty, zábradlia a kovové konštrukcie</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-141" class="mega-service-box">
-  <a href="/sluzby/strojarstvo/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Strojárstvo</span>
-      <span class="mega-service-desc">Presné kovoobrábanie, sústruženie a frézovanie</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-140" class="mega-service-box">
-  <a href="/sluzby/hodinovy-manzel/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Hodinový manžel</span>
-      <span class="mega-service-desc">Drobné opravy v domácnosti, montáž a údržba</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-138" class="mega-service-box">
-  <a href="/sluzby/doprava/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Doprava</span>
-      <span class="mega-service-desc">Nákladná preprava materiálu a tovaru s vykládkou</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-139" class="mega-service-box">
-  <a href="/sluzby/pozicovna-naradia/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Požičovňa náradia</span>
-      <span class="mega-service-desc">Profesionálne stavebné stroje a náradie na prenájom</span>
-    </div>
-  </a>
-</li>
-<li class="mega-menu-featured">
-  <a href="/realizacie/">
-    <div class="mega-featured-bg" style="background-image: url('/wp-content/uploads/2025/06/fido-rekonstrukcia-chaty-02.webp');"></div>
-    <div class="mega-featured-content">
-      <span class="mega-featured-kicker">FIDO Realizácie</span>
-      <span class="mega-featured-title">Pozrite si naše dokončené projekty</span>
-    </div>
-  </a>
-</li>
-`;
-
-const furnitureBoxesHtml = `
-<li id="menu-item-furniture-kuchyne" class="mega-service-box">
-  <a href="/sluzby/nabytok-na-mieru/kuchynske-linky/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2" ry="2"></rect><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><circle cx="9" cy="6" r="1"></circle><circle cx="15" cy="6" r="1"></circle></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Kuchynské linky</span>
-      <span class="mega-service-desc">Ergonomické kuchyne na mieru s maximálnym využitím priestoru</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-furniture-vstavane" class="mega-service-box">
-  <a href="/sluzby/nabytok-na-mieru/vstavane-skrine/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line><path d="M6 9h0M6 15h0M12 9h0M12 15h0M18 9h0M18 15h0"></path></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Vstavané skrine</span>
-      <span class="mega-service-desc">Moderné a praktické úložné riešenia do každej izby</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-furniture-satniky" class="mega-service-box">
-  <a href="/sluzby/nabytok-na-mieru/satniky/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3c0 .8.4 1.5 1 2L3.6 15.6a2 2 0 0 0 1.4 3.4h14a2 2 0 0 0 1.4-3.4L14 7c.6-.5 1-1.2 1-2a3 3 0 0 0-3-3z"></path></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Šatníky</span>
-      <span class="mega-service-desc">Samostatné šatníkové systémy a veľkorysé úložné priestory</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-furniture-postele" class="mega-service-box">
-  <a href="/sluzby/nabytok-na-mieru/postele/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"></path><path d="M3 7V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2"></path><path d="M7 11h10M7 15h10"></path></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Postele</span>
-      <span class="mega-service-desc">Pohodlné čalúnené aj drevené postele pre zdravý spánok</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-furniture-obyvacie" class="mega-service-box">
-  <a href="/sluzby/nabytok-na-mieru/obyvacie-steny/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Obývacie steny</span>
-      <span class="mega-service-desc">Elegantné a dizajnové zostavy pre moderné obývačky</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-furniture-stoly" class="mega-service-box">
-  <a href="/sluzby/nabytok-na-mieru/stoly/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v4H3zM4 7v14M20 7v14M8 7v7M16 7v7"></path></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Stoly</span>
-      <span class="mega-service-desc">Jedálenské, konferenčné a pracovné stoly na mieru</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-furniture-komody" class="mega-service-box">
-  <a href="/sluzby/nabytok-na-mieru/komody/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line><circle cx="12" cy="6" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="18" r="1"></circle></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Komody</span>
-      <span class="mega-service-desc">Praktické zásuvkové skrinky prispôsobené vášmu interiéru</span>
-    </div>
-  </a>
-</li>
-<li id="menu-item-furniture-panely" class="mega-service-box">
-  <a href="/sluzby/nabytok-na-mieru/dekoracne-panely/">
-    <div class="mega-service-icon">
-      <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-    </div>
-    <div class="mega-service-details">
-      <span class="mega-service-title">Dekoračné panely</span>
-      <span class="mega-service-desc">Dizajnové drevené obklady a lamelové steny</span>
-    </div>
-  </a>
-</li>
-<li class="mega-menu-featured">
-  <a href="/sluzby/nabytok-na-mieru/">
-    <div class="mega-featured-bg" style="background-image: url('/wp-content/uploads/2025/06/fido-nabytok-35.webp');"></div>
-    <div class="mega-featured-content">
-      <span class="mega-featured-kicker">Nábytok FIDO</span>
-      <span class="mega-featured-title">Pozrite si ponuku nábytku na mieru</span>
-    </div>
-  </a>
-</li>
-`;
-
 const postupSectionPattern = /<section id="section-264-72"[\s\S]*?<\/section>/i;
 
+type PostupStep = {
+  num: string;
+  title: string;
+  desc: string;
+  image: string;
+};
+
+type FurnitureFaq = {
+  question: string;
+  answer: string;
+};
+
+function generatePostupCardsHtml(steps: PostupStep[]) {
+  return steps.map((step) => `
+    <div class="fido-postup-card">
+      <div class="fido-postup-image-wrapper">
+        <img src="${step.image}" alt="${step.title}" class="fido-postup-image" loading="lazy" />
+      </div>
+      <div class="fido-postup-number">${step.num}</div>
+      <div class="fido-postup-content">
+        <h3 class="fido-postup-card-title">${step.title}</h3>
+        <p class="fido-postup-card-desc">${step.desc}</p>
+      </div>
+    </div>
+  `).join("");
+}
+
 function generatePostupHtml() {
-  const postupSteps = [
+  const postupSteps: PostupStep[] = [
     {
       num: "01",
       title: "Poradenstvo",
@@ -425,19 +303,6 @@ function generatePostupHtml() {
     },
   ];
 
-  const stepsHtml = postupSteps.map((step) => `
-    <div class="fido-postup-card">
-      <div class="fido-postup-image-wrapper">
-        <img src="${step.image}" alt="${step.title}" class="fido-postup-image" loading="lazy" />
-      </div>
-      <div class="fido-postup-number">${step.num}</div>
-      <div class="fido-postup-content">
-        <h3 class="fido-postup-card-title">${step.title}</h3>
-        <p class="fido-postup-card-desc">${step.desc}</p>
-      </div>
-    </div>
-  `).join("");
-
   return `
     <section id="ako-pracujeme" class="ct-section section-width fido-postup-section">
       <div class="ct-section-inner-wrap">
@@ -449,14 +314,148 @@ function generatePostupHtml() {
           </p>
         </div>
         <div class="fido-postup-grid">
-          ${stepsHtml}
+          ${generatePostupCardsHtml(postupSteps)}
         </div>
       </div>
     </section>
   `;
 }
 
-function generateServiceCardsHtml() {
+function generateFurnitureDetailPostupHtml() {
+  const steps: PostupStep[] = [
+    {
+      num: "01",
+      title: "Poradenstvo",
+      desc: "Preberieme vaše predstavy, spôsob používania nábytku, materiály aj požadovaný rozpočet.",
+      image: "/postup/poradenstvo.webp",
+    },
+    {
+      num: "02",
+      title: "Zameranie",
+      desc: "Priestor presne zameriame, aby hotový nábytok sedel na svoje miesto bez kompromisov.",
+      image: "/postup/zameranie.webp",
+    },
+    {
+      num: "03",
+      title: "Návrh a výroba",
+      desc: "Pripravíme návrh a po jeho odsúhlasení vyrobíme nábytok podľa dohodnutých špecifikácií.",
+      image: "/postup/vyroba.webp",
+    },
+    {
+      num: "04",
+      title: "Montáž",
+      desc: "Nábytok bezpečne dopravíme, odborne namontujeme a odovzdáme pripravený na používanie.",
+      image: "/postup/montaz.webp",
+    },
+  ];
+
+  return `
+    <div class="fido-postup-section fido-postup-inline">
+      <div class="fido-postup-header">
+        <span class="fido-postup-kicker">Postup pri výrobe</span>
+        <h2 class="fido-postup-title">Ako pracujeme</h2>
+      </div>
+      <div class="fido-postup-grid">${generatePostupCardsHtml(steps)}</div>
+    </div>
+  `;
+}
+
+const furnitureFaqs: Record<string, FurnitureFaq[]> = {
+  "Dekoračné panely": [
+    { question: "Aké materiály a dekory sú dostupné?", answer: "Vyberať môžete z drevených, lamelových, čalúnených aj moderných kompozitných panelov v rôznych farbách a povrchových úpravách." },
+    { question: "Dajú sa panely doplniť osvetlením?", answer: "Áno. Do návrhu vieme zapracovať nepriame LED osvetlenie, ktoré zvýrazní štruktúru panelov aj atmosféru miestnosti." },
+    { question: "Ako dlho trvá montáž?", answer: "Bežnú realizáciu zvládneme spravidla počas jedného dňa; presný čas závisí od plochy a členitosti steny." },
+  ],
+  "Komody": [
+    { question: "Viete vyrobiť komodu do atypického priestoru?", answer: "Áno. Rozmery, členenie aj spôsob otvárania navrhneme presne podľa dostupného priestoru." },
+    { question: "Aké úložné riešenia môžem kombinovať?", answer: "Kombinovať môžete zásuvky, dvierka, otvorené police aj vnútorné organizéry podľa spôsobu používania." },
+    { question: "Môže komoda ladiť s existujúcim nábytkom?", answer: "Áno. Pomôžeme vám vybrať dekor, farbu a kovanie tak, aby nový kus prirodzene zapadol do interiéru." },
+  ],
+  "Kuchynské linky": [
+    { question: "Zabezpečujete aj zameranie a návrh kuchyne?", answer: "Áno. Súčasťou realizácie je odborné zameranie, dispozičný návrh, výber materiálov aj cenová ponuka." },
+    { question: "Viete do návrhu zahrnúť spotrebiče a osvetlenie?", answer: "Áno. Kuchyňu pripravíme pre vstavané spotrebiče a môžeme doplniť pracovné aj ambientné LED osvetlenie." },
+    { question: "Ako dlho trvá výroba kuchyne?", answer: "Termín závisí od rozsahu a materiálov. Presný harmonogram dostanete po odsúhlasení finálneho návrhu." },
+  ],
+  "Obývacie steny": [
+    { question: "Navrhujete obývacie steny aj pre malé priestory?", answer: "Áno. Návrh prispôsobíme rozmerom miestnosti tak, aby pôsobil ľahko a zároveň ponúkol dostatok úložného priestoru." },
+    { question: "Je možné ukryť káble a techniku?", answer: "Áno. Myslíme na vedenie káblov, odvetranie elektroniky aj praktický prístup k zásuvkám." },
+    { question: "Dá sa zostava doplniť LED osvetlením?", answer: "Áno. Osvetlenie vieme integrovať do políc, vitrín alebo za televízny panel." },
+  ],
+  "Postele": [
+    { question: "Vyrábate aj postele atypických rozmerov?", answer: "Áno. Posteľ prispôsobíme rozmerom miestnosti, matraca aj vašim individuálnym požiadavkám." },
+    { question: "Môže mať posteľ úložný priestor?", answer: "Áno. Navrhneme výklopný systém, zásuvky alebo kombinované úložné riešenie." },
+    { question: "Je možné vyrobiť čalúnené čelo?", answer: "Áno. Vybrať si môžete čalúnené, drevené aj kombinované čelo v rôznych výškach a materiáloch." },
+  ],
+  "Šatníky": [
+    { question: "Navrhujete aj vnútorné usporiadanie šatníka?", answer: "Áno. Police, zásuvky, tyče aj doplnky rozvrhneme podľa vášho oblečenia a každodenných návykov." },
+    { question: "Viete vyriešiť šatník v podkroví?", answer: "Áno. Nábytok na mieru je vhodný aj pod šikminy, do výklenkov a ďalších atypických priestorov." },
+    { question: "Dajú sa doplniť zrkadlá a osvetlenie?", answer: "Áno. Do návrhu môžeme zahrnúť zrkadlové plochy, LED osvetlenie aj praktické výsuvné doplnky." },
+  ],
+  "Stoly": [
+    { question: "Aké rozmery stola si môžem zvoliť?", answer: "Rozmery prispôsobíme priestoru, počtu používateľov aj tomu, či ide o jedálenský, pracovný alebo konferenčný stôl." },
+    { question: "Aké materiály používate?", answer: "Pracujeme s masívnym drevom, laminovanými materiálmi, kovovými podnožami aj ich kombináciami." },
+    { question: "Viete vyrobiť rozkladací alebo pracovný stôl?", answer: "Áno. Podľa zadania pripravíme rozkladacie riešenie, káblové priechodky aj úložné prvky pre pracovisko." },
+  ],
+  "Vstavané skrine": [
+    { question: "Koľko trvá výroba vstavanej skrine?", answer: "Bežná výroba trvá približne dva až tri týždne od schválenia návrhu; presný termín potvrdíme v cenovej ponuke." },
+    { question: "Je možné zahrnúť osvetlenie alebo zrkadlá?", answer: "Áno. Súčasťou návrhu môže byť LED osvetlenie, zrkadlové dvere aj praktické vnútorné doplnky." },
+    { question: "Viete vyrobiť skriňu do podkrovia alebo výklenku?", answer: "Áno. Navrhneme riešenie aj pod šikminu, do výklenku alebo iného atypického priestoru." },
+  ],
+};
+
+function generateFurnitureFaqHtml(title: string) {
+  const faqs = furnitureFaqs[title] ?? [];
+  if (!faqs.length) return "";
+
+  return `
+    <section class="ct-section section-width fido-furniture-faq-section">
+      <div class="ct-section-inner-wrap">
+        <div class="fido-furniture-section-header">
+          <span>Praktické informácie</span>
+          <h2>Časté otázky</h2>
+        </div>
+        <div class="fido-furniture-faq-list">
+          ${faqs.map((faq) => `
+            <div class="fido-furniture-faq-item">
+              <button type="button" class="fido-furniture-faq-trigger" aria-expanded="false">
+                ${faq.question}
+              </button>
+              <div class="fido-furniture-faq-answer" aria-hidden="true">
+                <div><p>${faq.answer}</p></div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function generateFurnitureRelatedHtml(currentTitle: string) {
+  const items = megaMenus.furniture.items.filter((item) => item.label !== currentTitle).slice(0, 4);
+  return `
+    <section id="section-19-73" class="ct-section section-width fido-furniture-related-section">
+      <div class="ct-section-inner-wrap">
+        <div class="fido-furniture-related-header">
+          <div><span>Inšpirujte sa</span><h2>Ďalší nábytok na mieru</h2></div>
+          <a class="ct-link-button btn-primary" href="/sluzby/nabytok-na-mieru/">Všetky riešenia</a>
+        </div>
+        <div class="fido-furniture-related-grid">
+          ${items.map((item) => `
+            <a class="fido-furniture-related-card" href="${item.href}">
+              <div class="fido-furniture-related-image">
+                <img src="${item.image}" alt="${item.label}" loading="lazy" />
+              </div>
+              <span>${item.label}</span>
+            </a>
+          `).join("")}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function generateServiceCardsHtml(onlyOtherServices = false) {
   const services = [
     {
       title: "Rekonštrukcie domov a bytov",
@@ -481,9 +480,9 @@ function generateServiceCardsHtml() {
     },
     {
       title: "Nehnuteľnosti",
-      image: "/wp-content/uploads/2025/06/fido-deco-2.webp",
+      image: "/wp-content/uploads/2025/06/Fido_LUBOVCE_Rendre_Exterier_1F-1-scaled-1.jpg",
       url: "/nehnutelnosti/",
-      text: "Ponúkame predaj, prenájom a správu nehnuteľností. Zabezpečíme pre vás kompletné právne služby a odborné poradenstvo.",
+      text: "Ponúkame predaj, prenájom and správu nehnuteľností. Zabezpečíme pre vás kompletné právne služby a odborné poradenstvo.",
       btnText: "Pozrieť ponuku"
     },
     {
@@ -509,7 +508,7 @@ function generateServiceCardsHtml() {
     },
     {
       title: "Preprava materiálov",
-      image: "/wp-content/uploads/2025/06/fido-autopo-pristresky-18.webp",
+      image: "/wp-content/uploads/2025/06/fido-shake-theory-27.webp",
       url: "/sluzby/doprava/",
       text: "Ponúkame spoľahlivú nákladnú autodopravu a prepravu stavebného materiálu, tovaru alebo sypkých materiálov s vykládkou hydraulickou rukou.",
       btnText: "Objednať prepravu"
@@ -523,7 +522,16 @@ function generateServiceCardsHtml() {
     }
   ];
 
-  return services.map(s => `
+  const filteredServices = onlyOtherServices
+    ? services.filter(
+        s =>
+          s.title !== "Okná, Brány a dvere" &&
+          s.title !== "Nábytok na mieru" &&
+          s.title !== "Nehnuteľnosti"
+      )
+    : services;
+
+  return filteredServices.map(s => `
     <div class="ct-div-block fido-custom-service-card card-sluzba-wrap">
       <a class="ct-link img-link-wraper-primary" href="${s.url}">
         <img loading="lazy" alt="${s.title}" src="${s.image}" class="ct-image img-primary" />
@@ -656,7 +664,7 @@ function enhanceLubovecHtml(bodyHtml: string) {
     </div>
   `;
 
-  return bodyHtml
+  let enhanced = bodyHtml
     .replace(
       /<div id="kontakt" class="ct-div-block inner-div" ><h2 id="headline-211-705" class="ct-headline h2 h-spacer">Zaujala vás naša ponuka?<\/h2><div id="text_block-212-705" class="ct-text-block text-l centred max-width-subclaim" >Ak máte záujem o jeden z bytov v tomto jedinečnom projekte, napíšte nám a my vás budeme obratom kontaktovať\.<\/div>/i,
       `<div id="kontakt" class="ct-div-block inner-div fido-lubovec-contact-section">${textHtml}`
@@ -665,35 +673,184 @@ function enhanceLubovecHtml(bodyHtml: string) {
       /<div id="shortcode-215-705" class="ct-shortcode" >/i,
       `<div id="shortcode-215-705" class="ct-shortcode fido-lubovec-contact-right">`
     );
+
+  // Project introduction
+  enhanced = enhanced.replace(
+    /<div id="text_block-56-705" class="ct-text-block text-l" >[\s\S]*?<\/div>/i,
+    `<div id="text_block-56-705" class="ct-text-block text-l">Rezidencia Ľubovec prináša moderné a pokojné bývanie v tesnej blízkosti Prešova. Projekt pozostáva zo šiestich moderne riešených bytových jednotiek, ktoré ponúkajú vysoký štandard materiálov, premyslené dispozície a dostatok súkromia pre každú rodinu. Spojenie vidieckeho ticha a rýchlej dostupnosti do mesta robí z tohto projektu ideálne miesto pre váš nový domov.</div>`
+  );
+
+  // XY Lorem ipsum statistic (remove the fourth subdiv)
+  enhanced = enhanced.replace(
+    /<div id="div_block-74-705" class="ct-div-block usp-subdiv" ><div id="text_block-75-705" class="ct-text-block usp-title" >XY<\/div><div id="text_block-76-705" class="ct-text-block usp-desc" >Lorem ipsum<\/div><\/div>/i,
+    ""
+  );
+
+  // Apartments subtitle
+  enhanced = enhanced.replace(
+    /<div id="text_block-87-705" class="ct-text-block text-l" >Lorem ipsum<\/div>/i,
+    `<div id="text_block-87-705" class="ct-text-block text-l">Vyberte si byt, ktorý najlepšie vyhovuje vašim potrebám.</div>`
+  );
+
+  // Financing text
+  enhanced = enhanced.replace(
+    /<div id="text_block-181-705" class="ct-text-block text-l" >[\s\S]*?<\/div>/i,
+    `<div id="text_block-181-705" class="ct-text-block text-l">Financovanie vášho nového bývania sme pre vás maximálne zjednodušili. Naši hypotekárni partneri vám pomôžu vybrať najvýhodnejšiu hypotéku s najlepšími podmienkami na trhu. Orientačnú výšku mesačnej splátky si môžete jednoducho vypočítať priamo v našej kalkulačke. Pre nezáväznú konzultáciu a kompletné preverenie vašich možností financovania nás neváhajte kontaktovať.</div>`
+  );
+
+  // Developer text
+  enhanced = enhanced.replace(
+    /<div id="text_block-203-705" class="ct-text-block text-l" >[\s\S]*?<\/div>/i,
+    `<div id="text_block-203-705" class="ct-text-block text-l">Za projektom Rezidencia Ľubovec stojí renomovaný developer FIDO s.r.o., ktorý má za sebou roky úspešných stavebných projektov a spokojných klientov. Našou hlavnou prioritou je kvalita, transparentnosť a plná zodpovednosť za každú fázu výstavby – od návrhu, cez stavebný proces až po kolaudáciu a finálne odovzdanie. Kladieme dôraz na vysokú profesionalitu, precízne detaily a spoľahlivé plnenie všetkých časových harmonogramov.</div>`
+  );
+
+  return enhanced;
+}
+
+function enhanceNehnutelnostiHtml(bodyHtml: string) {
+  return bodyHtml
+    .replace(
+      /<h3 id="headline-14-700" class="ct-headline card-bits-subtitle">[\s\S]*?<\/h3>/i,
+      `<h3 id="headline-14-700" class="ct-headline card-bits-subtitle">Moderné bývanie</h3>`
+    )
+    .replace(
+      /<div id="text_block-16-700" class="ct-text-block card-bits-text" >[\s\S]*?<\/div>/i,
+      `<div id="text_block-16-700" class="ct-text-block card-bits-text">Dôraz kladieme na energetickú úspornosť, moderné dispozičné riešenia a vysokú kvalitu použitých materiálov.</div>`
+    )
+    .replace(
+      /<h3 id="headline-19-700" class="ct-headline card-bits-subtitle">[\s\S]*?<\/h3>/i,
+      `<h3 id="headline-19-700" class="ct-headline card-bits-subtitle">Pokojná lokalita</h3>`
+    )
+    .replace(
+      /<div id="text_block-21-700" class="ct-text-block card-bits-text" >[\s\S]*?<\/div>/i,
+      `<div id="text_block-21-700" class="ct-text-block card-bits-text">Projekt je osadený v tichom prostredí plnom zelene, ktoré poskytuje ideálne podmienky pre rodinný život.</div>`
+    )
+    .replace(
+      /<h3 id="headline-24-700" class="ct-headline card-bits-subtitle">[\s\S]*?<\/h3>/i,
+      `<h3 id="headline-24-700" class="ct-headline card-bits-subtitle">Výborná dostupnosť do Prešova</h3>`
+    )
+    .replace(
+      /<div id="text_block-26-700" class="ct-text-block card-bits-text" >[\s\S]*?<\/div>/i,
+      `<div id="text_block-26-700" class="ct-text-block card-bits-text">Rýchle a bezproblémové dopravné napojenie na krajské mesto Prešov autom aj autobusovým spojením.</div>`
+    );
+}
+
+function enhanceSluzbyNehnutelnostiHtml(bodyHtml: string) {
+  return bodyHtml
+    .replace(
+      /<span id="span-36-72" class="ct-span" >Ut enim ad mini<\/span>/i,
+      `<span id="span-36-72" class="ct-span">Kompletná výstavba na kľúč</span>`
+    )
+    .replace(
+      /<span id="span-42-72" class="ct-span" >[\s\S]*?<\/span>/i,
+      `<span id="span-42-72" class="ct-span">Postaráme sa o všetko od výkopových prác a hrubej stavby až po finálne interiérové detaily a odovzdanie hotového domu na kľúč.</span>`
+    )
+    .replace(
+      /<span id="span-38-72" class="ct-span" >Uis nostrud exercitation<\/span>/i,
+      `<span id="span-38-72" class="ct-span">Transparentný rozpočet a harmonogram</span>`
+    )
+    .replace(
+      /<span id="span-45-72" class="ct-span" >Ut enim ad minim veniam, quis nostrud exercitation<\/span>/i,
+      `<span id="span-45-72" class="ct-span">Vopred presne poznáte rozpis materiálov, prác a termínov. Pracujeme podľa jasne stanoveného rozpočtu bez akýchkoľvek skrytých poplatkov.</span>`
+    )
+    .replace(
+      /<span id="span-40-72" class="ct-span" >, quis nostrud exercitation<\/span>/i,
+      `<span id="span-40-72" class="ct-span">Jeden spoľahlivý tím od návrhu po odovzdanie</span>`
+    )
+    .replace(
+      /<span id="span-49-72" class="ct-span" >Ut enim ad minim veniam, quis  enim ad minim veniam, quis nostrud exercitation<\/span>/i,
+      `<span id="span-49-72" class="ct-span">Celú realizáciu od projektovej dokumentácie až po kolaudáciu zastrešuje naša firma, čo vám zaručuje bezproblémový priebeh bez koordinácie subdodávateľov.</span>`
+    );
+}
+
+function enhanceOknaBranyDvereHtml(bodyHtml: string) {
+  return bodyHtml.replace(
+    /<span id="span-20-72" class="ct-span" >[\s\S]*?<\/span>/i,
+    `<span id="span-20-72" class="ct-span">Dodávame a montujeme plastové, hliníkové, drevené a oceľové okná, vstupné dvere aj posuvné systémy. Zabezpečíme odborné zameranie, výber riešenia a precíznu montáž.</span>`
+  );
+}
+
+function furnitureGalleryImages(bodyHtml: string) {
+  const images: string[] = [];
+  const galleryItemPattern = /<a\b(?=[^>]*\bclass=["'][^"']*\boxy-gallery-item\b[^"']*["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/gi;
+  let match: RegExpExecArray | null;
+
+  while ((match = galleryItemPattern.exec(bodyHtml)) !== null) {
+    const image = match[1];
+    if (/^\/wp-content\/uploads\/[a-z0-9_./%,-]+$/i.test(image) && !images.includes(image)) {
+      images.push(image);
+    }
+  }
+
+  return images.slice(0, 8);
+}
+
+function enhanceFurnitureDetailHero(bodyHtml: string) {
+  const heroPattern = /(<section id="section-2-73"[^>]*>)<div class="ct-section-inner-wrap">([\s\S]*?)<\/div><\/section>/i;
+  if (!heroPattern.test(bodyHtml)) return bodyHtml;
+
+  const title = furnitureDetailTitle(bodyHtml);
+  const galleryImages = furnitureGalleryImages(bodyHtml);
+  const fallbackImage = megaMenus.furniture.items.find((item) => item.label === title)?.image;
+  const images = galleryImages.length ? galleryImages : fallbackImage ? [fallbackImage] : [];
+  const mediaHtml = images.length
+    ? `<div class="fido-furniture-detail-media fido-hero-slider" aria-label="Ukážky realizácií">${images.map((image, index) => (
+        `<div class="fido-hero-slide${index === 0 ? " active" : ""}" style="background-image:url('${image}')"></div>`
+      )).join("")}</div>`
+    : `<div class="fido-furniture-detail-media fido-furniture-detail-media-empty" aria-label="Galéria pripravujeme"></div>`;
+
+  return bodyHtml.replace(
+    heroPattern,
+    (_, sectionOpen: string, heroContent: string) => (
+      `${sectionOpen}<div class="ct-section-inner-wrap fido-furniture-detail-hero">` +
+      `<div class="fido-furniture-detail-copy">${heroContent}</div>${mediaHtml}</div></section>`
+    ),
+  );
+}
+
+function removeWordPressDescriptionDividers(bodyHtml: string) {
+  return bodyHtml.replace(
+    /<hr\b[^>]*class=["'][^"']*\bwp-block-separator\b[^"']*["'][^>]*\/?\s*>/gi,
+    "",
+  );
+}
+
+function furnitureDetailTitle(bodyHtml: string) {
+  const title = /<h1\b[^>]*id="headline-5-73"[^>]*>([\s\S]*?)<\/h1>/i.exec(bodyHtml)?.[1] ?? "";
+  return title.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+}
+
+function standardizeFurnitureDetailContent(bodyHtml: string) {
+  const title = furnitureDetailTitle(bodyHtml);
+  let enhanced = removeWordPressDescriptionDividers(bodyHtml)
+    .replace(
+    /<h[2-4]\b[^>]*>\s*Ako to prebieha\?\s*<\/h[2-4]>\s*<ol\b[^>]*>[\s\S]*?<\/ol>/i,
+      "",
+    )
+    .replace(
+      /<h[2-4]\b[^>]*>\s*Časté otázky\s*(?:\(FAQ\))?\s*<\/h[2-4]>[\s\S]*?(?=<\/span>)/i,
+      "",
+    )
+    .replace(/CTA\s*[–-]\s*Vytvorme spolu vašu novú posteľ/gi, "Vytvorme spolu vašu novú posteľ");
+
+  enhanced = enhanced.replace(
+    /(<section id="section-14-73"[\s\S]*?<\/section>)/i,
+    `$1${generateFurnitureDetailPostupHtml()}`,
+  );
+  enhanced = enhanced.replace(
+    /(?=<section id="kontakt")/i,
+    generateFurnitureFaqHtml(title),
+  );
+  enhanced = enhanced.replace(
+    /<section id="section-19-73"[\s\S]*?<\/section>/i,
+    generateFurnitureRelatedHtml(title),
+  );
+
+  return enhanced;
 }
 
 function enhanceHtml(bodyHtml: string) {
-  let enhanced = bodyHtml
-    .replace(/Kontaktujte nás[\s\u2028\u2029]+ešte dnes/gi, "Kontaktujte nás ešte dnes")
-    .replace(
-      /<a id="link_text-144-27"[\s\S]*?<\/a>/i,
-      '<button type="button" id="link_text-144-27" class="ct-link-text footer-link fido-cookie-settings" data-cookie-settings>Nastavenia cookies</button>',
-    )
-    .replace(/<a id="link_text-149-27"[\s\S]*?<\/a>/i, "")
-    .replace(/<a id="div_block-152-27"[\s\S]*?<\/a>/i, "")
-    .replace(
-      /<span id="span-141-27" class="ct-span"[^>]*>\d{4}<\/span>/g,
-      '<span id="span-141-27" class="ct-span">2026</span>',
-    )
-    .replace(
-      /(id="link-136-27"\s+class="ct-link"\s+href=")([^"]*)/gi,
-      "$1/"
-    )
-    .replace(
-      /(<li id="menu-item-122"\b[\s\S]*?<\/a>\s*)<ul class="sub-menu">[\s\S]*?<\/ul>/i,
-      `$1<ul class="sub-menu">${serviceBoxesHtml}</ul>`
-    );
-
-  // Replace sub-menu markup for Nabytok menu-item-116
-  enhanced = enhanced.replace(
-    /(<li id="menu-item-116"\s+class=")([^"]*)(">\s*<a href="\/sluzby\/nabytok-na-mieru\/">Nábytok<\/a>\s*)(<\/li>)/i,
-    `$1$2 menu-item-has-children$3<ul class="sub-menu">${furnitureBoxesHtml}</ul>$4`
-  );
+  let enhanced = bodyHtml.replace(calculSectionPattern, generateFidoCalculBannerHtml());
 
   if (postupSectionPattern.test(enhanced)) {
     enhanced = enhanced.replace(postupSectionPattern, generatePostupHtml());
@@ -716,47 +873,6 @@ function enhanceHtml(bodyHtml: string) {
         <div class="fido-hero-slide" style="background-image: url('/wp-content/uploads/2025/06/fido-postel-02.webp');"></div>
         <div class="fido-hero-slide" style="background-image: url('/wp-content/uploads/2025/06/fido-kuchyna-c-12.webp');"></div>
         <div class="fido-hero-slide" style="background-image: url('/wp-content/uploads/2025/06/fido-vstavana-skrina-a-02.webp');"></div>
-        
-        <script>
-          (function() {
-            function initSlider() {
-              const slider = document.querySelector(".fido-hero-slider");
-              if (!slider) return;
-              if (slider.dataset.initialized) return;
-              slider.dataset.initialized = "true";
- 
-              const slides = slider.querySelectorAll(".fido-hero-slide");
-              let currentIndex = 0;
-              let timer;
- 
-              function showSlide(index) {
-                if (slides.length === 0) return;
-                slides[currentIndex].classList.remove("active");
-                currentIndex = (index + slides.length) % slides.length;
-                slides[currentIndex].classList.add("active");
-              }
- 
-              function nextSlide() { showSlide(currentIndex + 1); }
- 
-              function startTimer() {
-                clearInterval(timer);
-                timer = setInterval(nextSlide, 4500);
-              }
- 
-              startTimer();
-            }
- 
-            if (document.readyState === "loading") {
-              document.addEventListener("DOMContentLoaded", initSlider);
-            } else {
-              initSlider();
-            }
-            const observer = new MutationObserver(function() {
-              initSlider();
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-          })();
-        </script>
       </div>
     `;
     enhanced = enhanced.replace(furnitureHeroPattern, sliderHtml);
@@ -768,15 +884,33 @@ function enhanceHtml(bodyHtml: string) {
     '<img id="image-75-67" alt="Marco Kamenčík" src="/wp-content/uploads/2025/06/fido-shake-theory-39.webp" class="ct-image cta-card-img" srcset="/wp-content/uploads/2025/06/fido-shake-theory-39.webp 1535w, /wp-content/uploads/2025/06/fido-shake-theory-39-200x300.webp 200w, /wp-content/uploads/2025/06/fido-shake-theory-39-683x1024.webp 683w, /wp-content/uploads/2025/06/fido-shake-theory-39-768x1152.webp 768w, /wp-content/uploads/2025/06/fido-shake-theory-39-1024x1536.webp 1024w, /wp-content/uploads/2025/06/fido-shake-theory-39-1366x2048.webp 1366w" sizes="(max-width: 1535px) 100vw, 1535px" />'
   );
 
-  return enhanced;
+  return enhanced.replace(/<script\b[\s\S]*?<\/script>/gi, "");
 }
 
 export async function NativeSnapshot({ page }: { page: NativePage }) {
   let bodyHtml = enhanceHtml(page.bodyHtml);
+  const bodyClasses = new Set(page.bodyClass.split(/\s+/));
 
-  const isContact = page.bodyClass.split(/\s+/).includes("page-id-50");
+  if (bodyHtml.includes('id="section-2-73"')) {
+    bodyHtml = enhanceFurnitureDetailHero(bodyHtml);
+    bodyHtml = standardizeFurnitureDetailContent(bodyHtml);
+  }
+
+  if (bodyClasses.has("postid-132") || bodyClasses.has("postid-136")) {
+    bodyHtml = removeWordPressDescriptionDividers(bodyHtml);
+  }
+
+  const isContact = bodyClasses.has("page-id-50");
   if (isContact) {
     bodyHtml = enhanceContactHtml(bodyHtml);
+  }
+
+  const isSluzbyArchive = bodyClasses.has("post-type-archive-sluzby");
+  if (isSluzbyArchive) {
+    bodyHtml = bodyHtml.replace(
+      /<div id="_dynamic_list-17-71"[\s\S]*?<\/div>\s*<\/div>\s*<\/section>/i,
+      `<div id="_dynamic_list-17-71" class="oxy-dynamic-list">${generateServiceCardsHtml(true)}</div></div></section>`
+    );
   }
 
   const isLubovec = page.bodyClass.split(/\s+/).includes("page-id-705");
@@ -784,13 +918,54 @@ export async function NativeSnapshot({ page }: { page: NativePage }) {
     bodyHtml = enhanceLubovecHtml(bodyHtml);
   }
 
-  // Extract the header from bodyHtml to place it outside the transformed transition wrapper
-  let headerHtml = "";
+  const isNehnutelnosti = page.bodyClass.split(/\s+/).includes("page-id-700");
+  if (isNehnutelnosti) {
+    bodyHtml = enhanceNehnutelnostiHtml(bodyHtml);
+  }
+
+  const isSluzbyNehnutelnosti = page.bodyClass.split(/\s+/).includes("postid-124");
+  if (isSluzbyNehnutelnosti) {
+    bodyHtml = enhanceSluzbyNehnutelnostiHtml(bodyHtml);
+  }
+
+  const isOknaBranyDvere = page.bodyClass.split(/\s+/).includes("postid-126");
+  if (isOknaBranyDvere) {
+    bodyHtml = enhanceOknaBranyDvereHtml(bodyHtml);
+  }
+
+  const projectPage = page.bodyClass.split(/\s+/).includes("single-realizacie")
+    ? extractProjectPage(bodyHtml)
+    : null;
+
+  if (projectPage) {
+    const reviewMatch = reviewsSectionPattern.exec(projectPage.remainingMainHtml);
+    const beforeReviews = reviewMatch ? projectPage.remainingMainHtml.slice(0, reviewMatch.index) : projectPage.remainingMainHtml;
+    const afterReviews = reviewMatch ? projectPage.remainingMainHtml.slice(reviewMatch.index + reviewMatch[0].length) : "";
+    const reviewsData = reviewMatch ? await getGoogleReviews() : null;
+    return (
+      <div className="fido-page-transition-wrapper">
+        <div className="native-page-styles" dangerouslySetInnerHTML={{ __html: page.headHtml }} />
+        <main className="fido-project-page">
+          <ProjectDetail data={projectPage.data} />
+          <div className="native-page-shell" dangerouslySetInnerHTML={{ __html: beforeReviews }} />
+          {reviewsData ? <GoogleReviews data={reviewsData} /> : null}
+          {afterReviews ? <div className="native-page-shell" dangerouslySetInnerHTML={{ __html: afterReviews }} /> : null}
+        </main>
+        {projectPage.auxiliaryHtml ? <div className="native-page-shell" dangerouslySetInnerHTML={{ __html: projectPage.auxiliaryHtml }} /> : null}
+      </div>
+    );
+  }
+
+  // The root layout owns one persistent header; discard the mirrored page copy.
   const headerMatch = /<header\b[\s\S]*?<\/header>/i.exec(bodyHtml);
   if (headerMatch) {
-    headerHtml = headerMatch[0];
     bodyHtml = bodyHtml.replace(headerMatch[0], "");
   }
+
+  // The root layout owns the single shared footer.
+  bodyHtml = bodyHtml
+    .replace(/<footer\b[\s\S]*?<\/footer>/i, "")
+    .replace(/<!--\s*WP_FOOTER\s*-->/gi, "");
   
   const isAbout = page.bodyClass.split(/\s+/).includes("page-id-46");
   if (isAbout) {
@@ -829,6 +1004,13 @@ export async function NativeSnapshot({ page }: { page: NativePage }) {
         /<div id="div_block-627-32"[\s\S]*?<\/div>/i,
         generateHomePartnersHtml()
       );
+
+    if (!bodyHtml.includes("fido-home-partners-block")) {
+      bodyHtml = bodyHtml.replace(
+        /(?=<section id="section-399-32")/i,
+        `<section class="ct-section section-width fido-home-partners-section"><div class="ct-section-inner-wrap">${generateHomePartnersHtml()}</div></section>`,
+      );
+    }
   }
 
   const isBlog = page.bodyClass.split(/\s+/).includes("blog");
@@ -847,12 +1029,6 @@ export async function NativeSnapshot({ page }: { page: NativePage }) {
 
   return (
     <>
-      {headerHtml ? (
-        <div
-          dangerouslySetInnerHTML={{ __html: headerHtml }}
-          suppressHydrationWarning
-        />
-      ) : null}
       <div className="fido-page-transition-wrapper">
         <div
           className="native-page-styles"

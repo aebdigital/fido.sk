@@ -43,7 +43,7 @@ function extractHeadStyles(head: string) {
   const tags = head.match(
     /<style\b[\s\S]*?<\/style>|<link\b(?=[^>]*(?:rel=["'][^"']*(?:stylesheet|preload)[^"']*["']|as=["']style["']))[^>]*>/gi,
   );
-  return tags?.join("\n") ?? "";
+  return (tags?.join("\n") ?? "").replace(/@font-face\s*\{[^{}]*\}/gi, "");
 }
 
 const privacyMain = `
@@ -120,6 +120,8 @@ function applyPageOverrides(pathname: string, bodyHtml: string) {
 }
 
 export const getNativePage = cache((pathname: string): NativePage | null => {
+  if (pathname === "/fido-building-calcul/") return null;
+
   const file = snapshotFile(pathname);
   if (!file || !fs.existsSync(file)) return null;
 
@@ -146,13 +148,11 @@ export const getNativePage = cache((pathname: string): NativePage | null => {
 });
 
 export function allNativePaths() {
-  return [
-    ...new Set([
+  return [...new Set([
       ...data.routes.map((route) => new URL(route).pathname),
       "/sluzby/",
       "/realizacie/",
-    ]),
-  ];
+    ])].filter((pathname) => pathname !== "/fido-building-calcul/");
 }
 
 export function nativeRouteParams() {
